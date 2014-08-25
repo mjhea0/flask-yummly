@@ -18,15 +18,17 @@
     </form>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <dl class="dl-horizontal">
+    <dl>
       {% for recipe in recipes %}
       <dt>
         {{ recipe.name }}
       </dt>
       <dd>
-        {{ recipe.ingredients }}
+        Ingredients: {{ recipe.ingredients }}
       </dd>
+      <img src={{ recipe.image }} alt="Recipe photo">
       {% endfor %}
     </dl>
   </body>
 </html>
+<!-- Figure out how to add image to list with link to recipe -->

@@ -13,5 +13,5 @@ def get_ingredients(ingredient):
     response = res.text
     return response
 
-    
+
 

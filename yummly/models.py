@@ -9,6 +9,8 @@ class Recipe(Base):
     id = Column(Integer, primary_key=True)
     name = Column(Text)
     ingredients = Column(Text)
+    image = Column(String)
+
 
 class Ingredient(Base):
     __tablename__ = "ingredient"

@@ -22,7 +22,10 @@ def recipes():
     matches = search_response.get("matches")
     for match in matches:
         recipe = Recipe(name=match.get("recipeName"),
-            ingredients=match.get("ingredients"))
+            ingredients=json.dumps(match.get("ingredients")),
+            image=json.dumps(match.get("smallImageUrls")))
         recipes.append(recipe)
-        print match.get("id"), match.get("recipeName"), match.get("ingredients")
+        print match.get("id"), match.get("recipeName"), json.dumps(match.get("ingredients")), json.dumps(match.get("smallImageUrls"))
     return render_template("index.html", recipes=recipes)
+
+# add separate Get Recipe API call to obtain the URL for the recipes 
