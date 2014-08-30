@@ -10,8 +10,7 @@ def get_ingredients(ingredient):
         "http://api.yummly.com/v1/api/recipes",
         params={'_app_id': APP_ID, '_app_key': APP_KEY, 'q': ingredient}
     )
-    response = res.text
-    return response
+    return res.text
 
 
 

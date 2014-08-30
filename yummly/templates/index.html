@@ -12,40 +12,31 @@
     <form role="form" method="POST">
       <div class="form-group">
       <label for="exampleInputIngredient">Ingredients:</label>
-      <input type="text" class="form-control" id="exampleInputIngredient" name="exampleInputIngredient" placeholder="Enter ingredients">
+      <input type="text" class="form-control" name="exampleInputIngredient" placeholder="Enter ingredients">
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
     </form>
+    <br><br>
+    {% if recipe_response %}
+    <h2><a href={{ recipe_response[2] }}>{{ recipe_response[0] }}</a></h2>
+    <p><img src={{ recipe_response[1] }} alt="Recipe photo"></p>
+    {% else %}
+        <p><strong>Sorry! No recipes match your search. Try again! </strong></p>
+    {% endif %}
+    {% if ingredients %}
+    <h3>Ingredients</h3>
+        <ul>
+        {% for ingredient in ingredients %}
+        <li>{{ ingredients }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+    <p><strong>Sorry! No ingredients. </strong></p>
+    {% endif %}
+    <hr>
+    </div>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<!--     <dl>
-      {% for recipe in recipes %}
-      <dt>
-        {{ recipe.name }}
-      </dt>
-      <dd>
-        Ingredients: 
-        {% for ingredient in recipe.ingredients %}
-        <ol>
-        <li> {{ ingredient }}
-        </li>
-        </ol>
-        {% endfor %}
-      </dd>
-      <img src={{ recipe.image }} alt="Recipe photo">
-      {% endfor %}
-    </dl> -->
-    <dl>
-    <p>
-    {{ match_name }}
-    <br>
-    {% if match_image %}
-    <a href={{ match_url }}><img src={{ match_image }} alt="Recipe photo"></a>
-    {% endif %}
-    <br>
-    {{ ingredients }}
-
-    </p>
   </body>
 </html>
 <!-- Figure out how to add image to list with link to recipe -->
