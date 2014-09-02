@@ -7,34 +7,48 @@ import json
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    recipe_response = []
+    recipe_response = [] # this doesn't work if placed after "if request.method..."...??
     ingredients = []
-
+    errors = []
+    image = []
     if request.method == "POST":
-        print "Calling get ingredients"
+        
         ingredient = request.form["exampleInputIngredient"]
-        response = api.get_ingredients(ingredient) # api call
-        search_response = json.loads(response)
+        
+        try:
+            response = api.get_ingredients(ingredient) # api call
+            search_response = json.loads(response)
 
-        matches = search_response["matches"]
-        for match in matches:
-            recipe_response.extend([
-                match["recipeName"], match["smallImageUrls"][0], match["id"]])
-            ingredients.append(match["ingredients"])
-            break # just one result
-        ingredients = ingredients[0]
+            matches = search_response["matches"]
+            for match in matches:
 
-    """    
-    match_image = search_response["matches"][0]["smallImageUrls"][0]
-    match_id = search_response["matches"][0]["id"]
-    match_url = "http://www.yummly.com/recipe/{0}".format(match_id)
-    recipe_response.extend([match_name, match_image])
-    
-    ingredient_response = search_response["matches"][0]["ingredients"]
-    ingredients = json.dumps(ingredient_response)
-    """
+                image = match['imageUrlsBySize']['90'].replace('s90-c', 's230-c')
+                
+                recipe_response.extend([
+                    match["recipeName"], image, match["id"]])
+                ingredients.append(match["ingredients"])
+                break # just one result for now
+            ingredients = ingredients[0]
+            print ingredients
+            print recipe_response
+
+        except: 
+            errors.append("Something went wrong!")
+
 
     return render_template(
         "index.html", 
-        recipe_response=recipe_response, 
-        ingredients=ingredients)
+        recipe_response=recipe_response,
+        ingredients=ingredients,
+        errors=errors)
+
+""" 
+add search by cuisine?
+Supported Cuisines:
+American, Italian, Asian, Mexican, Southern & Soul Food, French, 
+Southwestern, Barbecue, Indian, Chinese, Cajun & Creole, English, 
+Mediterranean, Greek, Spanish, German, Thai, Moroccan, Irish, Japanese, 
+Cuban, Hawaiin, Swedish, Hungarian, Portugese
+
+include form for excluded ingredients
+"""

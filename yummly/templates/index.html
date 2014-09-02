@@ -4,25 +4,36 @@
     <title>Recipe Search</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <style>
+      .container {
+        max-width: 400px;
+        padding-top: 60px;
+      }
+    </style>
   </head>
   <body>
     <div class="container">
       <h1>Recipe Search</h1>
-    </div>
+    <br>
+
+    <!-- search form -->
     <form role="form" method="POST">
       <div class="form-group">
       <label for="exampleInputIngredient">Ingredients:</label>
-      <input type="text" class="form-control" name="exampleInputIngredient" placeholder="Enter ingredients">
+      <input type="text" class="form-control" name="exampleInputIngredient" placeholder="Enter ingredients...">
     </div>
     <button type="submit" class="btn btn-default">Submit</button>
     </form>
     <br><br>
+
+    <hr>
+
+    <!-- results -->
     {% if recipe_response %}
-    <h2><a href={{ recipe_response[2] }}>{{ recipe_response[0] }}</a></h2>
+    <h2><a href="http://www.yummly.com/recipe/{{ recipe_response[2] }}">{{ recipe_response[0] }}</a></h2>
     <p><img src={{ recipe_response[1] }} alt="Recipe photo"></p>
-    {% else %}
-        <p><strong>Sorry! No recipes match your search. Try again! </strong></p>
     {% endif %}
+        
     {% if ingredients %}
     <h3>Ingredients</h3>
         <ul>
@@ -30,13 +41,16 @@
         <li>{{ ingredient }}</li>
         {% endfor %}
         </ul>
-    {% else %}
-    <p><strong>Sorry! No ingredients. </strong></p>
     {% endif %}
-    <hr>
+
+    {% if errors %}
+      {% for error in errors %}
+        <li class="alert alert-warning">{{ error }}</li>
+      {% endfor %}
+    {% endif %}
+
     </div>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
   </body>
 </html>
-<!-- Figure out how to add image to list with link to recipe -->
