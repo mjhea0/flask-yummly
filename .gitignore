@@ -4,3 +4,4 @@ env
 
 secret.py
 secret.pyc
+.env
