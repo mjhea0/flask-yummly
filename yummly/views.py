@@ -7,41 +7,39 @@ import json
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    recipe_response = [] # this doesn't work if placed after "if request.method..."...??
-    ingredients = []
-    errors = []
-    image = []
+
     if request.method == "POST":
-        
-        ingredient = request.form["exampleInputIngredient"]
-        
+        errors = []
+
+        ingredient = request.form["exampleInputIngredient"] # grabbing ingredient from form
         try:
             response = api.get_ingredients(ingredient) # api call
-            search_response = json.loads(response)
+            #search_response = json.loads(response)
 
-            matches = search_response["matches"]
-            for match in matches:
+            #for match in response["matches"]: # loop through json results
 
-                image = match['imageUrlsBySize']['90'].replace('s90-c', 's230-c')
+                #image = match['imageUrlsBySize']['90'].replace('s90-c', 's230-c')
                 
-                recipe_response.extend([
-                    match["recipeName"], image, match["id"]])
-                ingredients.append(match["ingredients"])
-                break # just one result for now
-            ingredients = ingredients[0]
-            print ingredients
-            print recipe_response
+                #recipe_response.extend([match["recipeName"], image, match["id"]])
+                #ingredients.append(match["ingredients"])
+                #break # just one result for now
+            #ingredients = ingredients[0]
+            #print recipe_response
 
         except: 
             errors.append("Something went wrong!")
 
 
-    return render_template(
-        "index.html", 
-        recipe_response=recipe_response,
-        ingredients=ingredients,
-        errors=errors)
+        return render_template(
+            "index.html", 
+            recipe_response=response,
+            errors=errors)
 
+    else:
+
+        return render_template(
+            "index.html"
+        )
 """ 
 add search by cuisine?
 Supported Cuisines:

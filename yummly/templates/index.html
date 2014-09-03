@@ -30,19 +30,17 @@
 
     <!-- results -->
     {% if recipe_response %}
-    <h2><a href="http://www.yummly.com/recipe/{{ recipe_response[2] }}">{{ recipe_response[0] }}</a></h2>
-    <p><img src={{ recipe_response[1] }} alt="Recipe photo"></p>
-    {% endif %}
-        
-    {% if ingredients %}
-    <h3>Ingredients</h3>
+      {% for recipe in recipe_response["matches"] %}
+        <h2><a href="http://www.yummly.com/recipe/{{ recipe["id"] }}">{{ recipe["recipeName"] }}</a></h2>
+        <p><img src={{ recipe['imageUrlsBySize']['90'].replace('s90-c', 's230-c') }} alt="Recipe photo"></p>
         <ul>
-        {% for ingredient in ingredients %}
-        <li>{{ ingredient }}</li>
-        {% endfor %}
+          {% for ingredient in recipe["ingredients"] %}
+          <li>{{ ingredient }}</li>
+          {% endfor %}
         </ul>
+      {% endfor %}
     {% endif %}
-
+   
     {% if errors %}
       {% for error in errors %}
         <li class="alert alert-warning">{{ error }}</li>
