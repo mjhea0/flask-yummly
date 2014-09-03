@@ -3,6 +3,7 @@
 
 import requests
 import json
+from secret import APP_ID, APP_KEY
 
 
 def get_ingredients(ingredient):
