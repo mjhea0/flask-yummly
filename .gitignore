@@ -1,7 +1,5 @@
 env
 *.pyc
 *.DS_Store
-
 secret.py
 secret.pyc
-.env

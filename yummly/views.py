@@ -1,52 +1,38 @@
 from flask import render_template, request
 
 from yummly import app
-import api 
-import json
+from yummly import api 
+import random
 
 
 @app.route("/", methods=["GET", "POST"])
 def index():
+    """
+    1. grab ingredient list from form
+    2. pass ingredients list to `get_ingredients()`
+    3. grab random result
+    3. return results to the template
+    """
 
     if request.method == "POST":
-        errors = []
+        errors = [] 
+        
+        ingredient_list = request.form['ingredient']  
 
-        ingredient = request.form["exampleInputIngredient"] # grabbing ingredient from form
         try:
-            response = api.get_ingredients(ingredient) # api call
-            #search_response = json.loads(response)
+            response = api.get_ingredients(ingredient_list) 
+            single_recipe = random.choice(response["matches"])
 
-            #for match in response["matches"]: # loop through json results
-
-                #image = match['imageUrlsBySize']['90'].replace('s90-c', 's230-c')
-                
-                #recipe_response.extend([match["recipeName"], image, match["id"]])
-                #ingredients.append(match["ingredients"])
-                #break # just one result for now
-            #ingredients = ingredients[0]
-            #print recipe_response
-
-        except: 
+        except: # silencing all errors
             errors.append("Something went wrong!")
-
 
         return render_template(
             "index.html", 
-            recipe_response=response,
+            recipe=single_recipe,
+            recipes=response,
             errors=errors)
 
     else:
 
-        return render_template(
-            "index.html"
-        )
-""" 
-add search by cuisine?
-Supported Cuisines:
-American, Italian, Asian, Mexican, Southern & Soul Food, French, 
-Southwestern, Barbecue, Indian, Chinese, Cajun & Creole, English, 
-Mediterranean, Greek, Spanish, German, Thai, Moroccan, Irish, Japanese, 
-Cuban, Hawaiin, Swedish, Hungarian, Portugese
+        return render_template("index.html")
 
-include form for excluded ingredients
-"""
