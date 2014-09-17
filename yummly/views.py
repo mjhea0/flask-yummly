@@ -18,13 +18,16 @@ def index():
         errors = [] 
         
         ingredient_list = request.form['ingredient']  
+        single_recipe = []
 
         try:
             response = api.get_ingredients(ingredient_list) 
             single_recipe = random.choice(response["matches"])
 
+
         except: # silencing all errors
-            errors.append("Something went wrong!")
+            #if not single_recipe:
+            errors.append("No results! Try again.")
 
         return render_template(
             "index.html", 

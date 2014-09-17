@@ -45,7 +45,7 @@
     </div>
 
     <div id="results">
-      {% if recipes %}
+      {% if recipe %}
       <span>We found <strong>{{ recipes['totalMatchCount'] }}</strong> recipes.<br>That's {{ recipes['totalMatchCount'] -1 }} too many.<br>Displaying <strong>1</strong> result...</span>
       {% endif %}
 
@@ -85,28 +85,6 @@
       </div> <!-- /jumbotron -->
 
     </div> <!-- /container -->
-
-
-
-    <!-- {% if recipe_response %}
-      {% for recipe in recipe_response["matches"] %}
-        {% if recipe["recipeName"] %}
-        <h2><a href="http://www.yummly.com/recipe/{{ recipe["id"] }}">{{ recipe["recipeName"] }}</a></h2>
-        {% endif %}
-        {% if recipe["imageUrlsBySize"] %}
-        <p><img src={{ recipe['imageUrlsBySize']['90'].replace('s90-c', 's230-c') }} alt="Recipe photo"></p>
-        {% endif %}
-        {% if recipe ["ingredients"] %}
-        <ul>
-          {% for ingredient in recipe["ingredients"] %}
-          <li>{{ ingredient }}</li>
-          {% endfor %}
-        </ul>
-        {% endif %}
-        <hr>
-      {% endfor %}
-    {% endif %} -->
-
 
     </div>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
