@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <font face="verdana"><title>Recipe Search</title>
+    <font face="corbel"><title>Recipe Search</title>
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="{{ url_for('static', filename='css/jumbotron-narrow.css') }}" rel="stylesheet" media="screen">
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" media="screen">
@@ -30,12 +30,13 @@
     <!-- search form -->
     <div id="search">
       <h3>Step One: Enter the ingredients you have.</h3>
-      <form role="form" method="POST">
+      <form role="form" method="POST" id="post-form" onsubmit="return false">
         <div class="form-group">
         <center><input type="text" class="form-control" name="ingredient"   placeholder="for example: chocolate, kale, high fructose corn syrup..." style="max-width: 400px;" required></center>
         </div>
         <h3>Step Two: Click the button.</h3>
         <button type="submit" class="btn btn-lg btn-info boom">Go!</button>
+        <button type="submit" class="btn btn-lg btn-info retry">Try Again?</button>
       </form>
     </div>
       
@@ -43,21 +44,27 @@
 
 
     </div>
-
     <div id="results">
+    </div>
+
+
+    <br>
+    <p class="new-link"><a href="#">New Search?</a></p>
+
+<!--     <div id="results">
       {% if recipe %}
       <span>We found <strong>{{ recipes['totalMatchCount'] }}</strong> recipes.<br>That's {{ recipes['totalMatchCount'] -1 }} too many.<br>Displaying <strong>1</strong> result...</span>
       {% endif %}
 
-      <!-- errors -->
-      {% if errors %}
+
+       {% if errors %}
         {% for error in errors %}
             <li class="alert alert-warning">{{ error }}</li>
           {% endfor %}
       {% endif %}
 
-    <!-- results -->
-    {% if recipe %}
+
+     {% if recipe %}
       <br>
       <strong>...and the winner is...</strong>
       <br><br>
@@ -80,7 +87,7 @@
         <strong>...enjoy!</strong>
       {% endif %}
 
-        </div>
+        </div> -->
 
       </div> <!-- /jumbotron -->
 
