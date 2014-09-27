@@ -15,18 +15,20 @@ def index():
     """
 
     if request.method == "POST":
-        errors = [] 
-        result = []
         ingredient_list = request.form.get('ingredient_list') 
+        recipe = []
 
         try:
             response = api.get_ingredients(ingredient_list) 
-            single_recipe = random.choice(response["matches"])
+            recipe = random.choice(response["matches"])
             result = {
-                "recipe_id": single_recipe["id"],
-                "recipe_name": single_recipe["recipeName"],
-                "recipe_pic": single_recipe['imageUrlsBySize']['90'].replace(
-                    's90-c', 's230-c')
+                "recipe_id": recipe["id"],
+                "recipe_name": recipe["recipeName"],
+                "recipe_pic": recipe['imageUrlsBySize']['90'].replace(
+                    's90-c', 's230-c'),
+                "recipe_rating": recipe['rating'],
+                "recipe_flavors": recipe['flavors'],
+                "recipe_ingredients": recipe['ingredients']
             }
             code = 200
 
