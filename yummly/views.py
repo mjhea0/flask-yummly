@@ -21,6 +21,10 @@ def index():
         try:
             response = api.get_ingredients(ingredient_list) 
             recipe = random.choice(response["matches"])
+            ingredients = []
+            for i in recipe['ingredients']:
+                ingredients.append(i)
+
             result = {
                 "recipe_id": recipe["id"],
                 "recipe_name": recipe["recipeName"],
@@ -28,7 +32,7 @@ def index():
                     's90-c', 's230-c'),
                 "recipe_rating": recipe['rating'],
                 "recipe_flavors": recipe['flavors'],
-                "recipe_ingredients": recipe['ingredients']
+                "recipe_ingredients": ingredients
             }
             code = 200
 
