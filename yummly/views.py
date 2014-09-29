@@ -34,6 +34,7 @@ def index():
                 "recipe_flavors": recipe['flavors'],
                 "recipe_ingredients": ingredients
             }
+            print result
             code = 200
 
         except: # silencing all errors
