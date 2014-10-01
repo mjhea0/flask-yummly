@@ -21,7 +21,7 @@ def index():
         try:
             response = api.get_ingredients(ingredient_list) 
             recipe = random.choice(response["matches"])
-            print recipe
+
             ingredients = []
             for i in recipe['ingredients']:
                 ingredients.append(i)
@@ -36,10 +36,14 @@ def index():
                 "recipe_ingredients": ingredients
             }
             code = 200
-
-        except: # silencing all errors
-            result = {"sorry": "Sorry, no results! Please try again."}
+        except requests.ConnectionError, e:
+            {"error": e}
             code = 500
+        except:
+            {"error" : "something very bad happened"}
+            code = 500
+
+        
 
 
         return jsonify(result), code
