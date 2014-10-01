@@ -38,10 +38,10 @@ def index():
 
         except: # silencing all errors
             result = {"sorry": "Sorry, no results! Please try again."}
-            code = 404
+            code = 500
 
 
-        return jsonify(result)
+        return jsonify(result), code
 
     else:
 
