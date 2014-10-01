@@ -38,6 +38,7 @@ $(function() {
         $('#results').html('');
     });
 });
+<<<<<<< HEAD
 
 // try:
 // GET REQUEST
@@ -47,3 +48,5 @@ $(function() {
 // except:
 // {"error" : "something very bad happened"}
 // code = 500
+=======
+>>>>>>> 2fc32a4b3776e86c0141368ee9a4b1f304e6e92a
