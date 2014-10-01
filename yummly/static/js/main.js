@@ -30,8 +30,8 @@ $(function() {
             }
             },
             error: function(error) {
-                console.log(result);
-                $("#errors").html(result.sorry)
+                console.log(error);
+                $("#errors").html(error.responseJSON.sorry)
             }
         });
     });
