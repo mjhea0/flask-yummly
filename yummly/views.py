@@ -42,6 +42,7 @@ def index():
         except:
             {"error" : "something very bad happened"}
             code = 500
+            # success
 
         
 
