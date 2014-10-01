@@ -36,15 +36,13 @@ def index():
                 "recipe_ingredients": ingredients
             }
             code = 200
-            return jsonify(result)
 
         except: # silencing all errors
             result = {"sorry": "Sorry, no results! Please try again."}
-            return jsonify(result)
-            code = 404
+            code = 500
 
 
-        return jsonify(result)
+        return jsonify(result), code
 
     else:
 
