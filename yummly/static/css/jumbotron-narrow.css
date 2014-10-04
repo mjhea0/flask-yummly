@@ -1,6 +1,7 @@
 /* Space out content a bit */
 body {
   padding-bottom: 20px;
+  font-family: Corbel;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -34,6 +35,7 @@ body {
 @media (min-width: 768px) {
   .container {
     max-width: 730px;
+    text-align: center;
   }
 }
 .container-narrow > hr {

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <font face="corbel"><title>Recipe Search</title>
+    <title>Recipe Search</title>
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link href="{{ url_for('static', filename='css/jumbotron-narrow.css') }}" rel="stylesheet" media="screen">
     <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet" media="screen">
@@ -39,21 +39,16 @@
         <button type="submit" class="btn btn-lg btn-info retry">I don't want this. Send me another result!</button>
       </form>
     </div>
-      
-      <br><br>
-
-
+    </div>
+    <div id="errors">
+    <p class="errors">
+    </p>
+    </div> 
     </div>
     <div id="results">
     </div>
-
-
     <br>
     <p class="new-link"><a href="#">New Search?</a></p>
-
-    </div>
-    <div id="errors">
-    </div>
     
 
 <!--     <div id="results">

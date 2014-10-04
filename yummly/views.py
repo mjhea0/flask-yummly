@@ -3,6 +3,7 @@ from flask import render_template, request, jsonify
 from yummly import app
 from yummly import api 
 import random
+import requests
 
 
 @app.route("/", methods=["GET", "POST"])
@@ -38,13 +39,12 @@ def index():
             code = 200
         except requests.ConnectionError, e:
             {"error": e}
+            result = {"sorry": "Sorry, your connection isn't working! Fix it and try again."}
             code = 500
         except:
             {"error" : "something very bad happened"}
+            result = {"sorry": "Sorry, no results! Please try again."}
             code = 500
-            # success
-
-        
 
 
         return jsonify(result), code
