@@ -24,7 +24,7 @@ $(function() {
                $("#errors").hide()
                $("#results").show()
                $("#results").html('<h3><a href="http://www.yummly.com/recipe/'+result.recipe_id+'">'+
-                   result.recipe_name+'</a></h3><p>Recipe Rating: '+result.recipe_rating+' out of 5</p><br>Ingredients you will need: <ul>'+result.recipe_ingredients+'</ul><a href="http://www.yummly.com/recipe/'+result.recipe_id+
+                   result.recipe_name+'</a></h3><p>Recipe Rating: '+result.recipe_rating+' out of 5</p><strong>Ingredients you will need</strong>: <ul>'+result.recipe_ingredients+'</ul><a href="http://www.yummly.com/recipe/'+result.recipe_id+
                    '"><img src='+result.recipe_pic+' alt="Recipe photo" style="border-radius:50%;"></a><br><br>');
             },
             error: function(error) {
