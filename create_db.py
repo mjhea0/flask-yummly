@@ -1,8 +1,13 @@
 from yummly import db
+from yummly.models import User
 
-from models import User
+db.create_all()
 
+# insert data
+db.session.add(User("admin", "ad@min.com", "admin"))
+db.session.commit()
 
+<<<<<<< HEAD
 # sql.py - Create a SQLite3 table and populate it with data
 
 
@@ -31,3 +36,8 @@ from models import User
 
 admin = User.query.filter(User.username=='test').first()
 print admin.email
+=======
+# sanity check!
+admin = User.query.filter_by(username='admin').first()
+print admin.username
+>>>>>>> 9e32403591504d8ef167b12515423903392c74a7

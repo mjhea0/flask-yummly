@@ -1,12 +1,14 @@
-from flask import render_template, request, jsonify, session, flash, redirect, url_for
+from flask import render_template, request, jsonify, \
+    session, flash, redirect, url_for
 
 from yummly import app
-from yummly import api 
+from yummly import api
 import random
 import requests
 
 from functools import wraps
 from yummly.forms import LoginForm
+
 
 def login_required(test):
     @wraps(test)
@@ -41,6 +43,7 @@ def logout():
     flash('You were logged out.')
     return redirect(url_for('login'))
 
+
 @app.route("/", methods=["GET", "POST"])
 @login_required
 def index():
@@ -52,11 +55,11 @@ def index():
     """
 
     if request.method == "POST":
-        ingredient_list = request.form.get('ingredient_list') 
+        ingredient_list = request.form.get('ingredient_list')
         recipe = []
 
         try:
-            response = api.get_ingredients(ingredient_list) 
+            response = api.get_ingredients(ingredient_list)
             recipe = random.choice(response["matches"])
 
             ingredients = []
@@ -73,15 +76,12 @@ def index():
                 "recipe_ingredients": ingredients
             }
             code = 200
-        except requests.ConnectionError, e:
-            {"error": e}
-            result = {"sorry": "Sorry, your connection isn't working! Fix it and try again."}
+        except requests.ConnectionError:
+            result = {"sorry": "Sorry, your connection isn't working! Fix it!"}
             code = 500
         except:
-            {"error" : "something very bad happened"}
             result = {"sorry": "Sorry, no results! Please try again."}
             code = 500
-
 
         return jsonify(result), code
 
