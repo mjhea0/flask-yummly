@@ -23,8 +23,8 @@ from models import User
 
 
 # db.create_all()
-db.session.add(User("admin", "ad@min.com", "admin"))
-db.session.commit()
+# db.session.add(User("admin", "ad@min.com", "admin"))
+# db.session.commit()
 
-# admin = User.query.filter_by(username='admin').first()
-# print admin.email
+admin = User.query.filter_by(username='admin').first()
+print admin.email
