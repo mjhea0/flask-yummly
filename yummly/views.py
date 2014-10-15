@@ -1,12 +1,48 @@
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, session, flash, redirect, url_for
 
 from yummly import app
 from yummly import api 
 import random
 import requests
 
+from functools import wraps
+from yummly.forms import LoginForm
+
+def login_required(test):
+    @wraps(test)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return test(*args, **kwargs)
+        else:
+            flash('You need to login first.')
+            return redirect(url_for('login'))
+    return wrap
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    form = LoginForm(request.form)
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            if request.form['username'] == "admin" and \
+                    request.form['password'] == "admin":
+                session['logged_in'] = True
+                return redirect(url_for('index'))
+            else:
+                error = 'Invalid username or password.'
+    return render_template('login.html', form=form, error=error)
+
+
+@app.route('/logout')
+@login_required
+def logout():
+    session.pop('logged_in', None)
+    flash('You were logged out.')
+    return redirect(url_for('login'))
 
 @app.route("/", methods=["GET", "POST"])
+@login_required
 def index():
     """
     1. grab ingredient list from form

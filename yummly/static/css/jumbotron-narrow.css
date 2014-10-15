@@ -1,7 +1,10 @@
 /* Space out content a bit */
 body {
   padding-bottom: 20px;
-  font-family: Corbel;
+  font-family: 'Quattrocento Sans', sans-serif;
+}
+h1 {
+  font-weight: 300;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -77,4 +80,7 @@ body {
   .jumbotron {
     border-bottom: 0;
   }
+}
+.main h1 {
+  font-weight: 100;
 }
