@@ -26,5 +26,8 @@ from models import User
 # db.session.add(User("admin", "ad@min.com", "admin"))
 # db.session.commit()
 
-admin = User.query.filter_by(username='admin').first()
+
+
+
+admin = User.query.filter(User.username=='test').first()
 print admin.email
