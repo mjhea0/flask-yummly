@@ -43,12 +43,16 @@ def adduser():
     if form.validate_on_submit():
         if form.password.data != form.password2.data:
             error = "Passwords must match!"
+        user = User.query.filter_by(username=form.username.data).first()
+        email = User.query.filter_by(email=form.email.data).first()
+        if user or email:
+            error = "User already exists. Please try again"
         else:
             user = User(username=form.username.data, email=form.email.data,
-                    password=bcrypt.generate_password_hash(form.password.data))
-            session['logged_in'] = True
+                    password=form.password.data)
             db.session.add(user)
             db.session.commit()
+            session['logged_in'] = True
             return redirect(url_for('index'))
         
     return render_template('new_user.html', form=form, error=error)
