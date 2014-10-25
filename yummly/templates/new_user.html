@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Create an account</h1>
+<br>
+<form class="form" role="form" method="post" action="">
+  <div class="create-user" align=center>
+  <label for="username">Username: </label> <input type="text" id="username" /><br>
+  <label for="pwd">Password: </label> <input type="password" id="pwd" /><br>
+  <label for="pwd">Re-enter Password: </label><input type="password" id="pwd2" /><br>
+  <label for="email">Email: </label><input type="email" id="email" /><br>
+  <button class="btn btn-sm btn-success" type="submit">Submit</button>
+  </div>
+</form>
+
+{% endblock %}

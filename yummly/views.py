@@ -36,6 +36,28 @@ def login():
             error = 'Invalid username or password.'
     return render_template('login.html', form=form, error=error)
 
+@app.route('/new_user', methods=['GET', 'POST'])
+def adduser():
+    if request.method == "POST":
+        username = request.form.get("username")
+        email = request.form.get("email")
+        # if session.query(User).filter_by(email=email).first():
+        #     print "User with that email address already exists"
+        #     return
+
+        password = request.form.get("pwd")
+        password_2 = request.form.get("pwd2")
+        while not (password and password_2) or password != password_2:
+            password = request.form.get("pwd")
+            password_2 = request.form.get("pwd2")
+        user = User(username=username, email=email,
+                    password=bcrypt.generate_password_hash(password))
+        session.add(user)
+        session.commit()
+        session['logged_in'] = True
+        return redirect(url_for('index'))
+    else:
+        return render_template("new_user.html")
 
 @app.route('/logout')
 @login_required
