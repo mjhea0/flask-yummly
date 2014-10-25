@@ -1,13 +1,13 @@
 from flask import render_template, request, jsonify, \
     session, flash, redirect, url_for
 
-from yummly import app, bcrypt
+from yummly import app, bcrypt, db
 from yummly import api
 import random
 import requests
 
 from functools import wraps
-from yummly.forms import LoginForm
+from yummly.forms import LoginForm, AddUserForm
 from models import User
 
 def login_required(test):
@@ -38,26 +38,20 @@ def login():
 
 @app.route('/new_user', methods=['GET', 'POST'])
 def adduser():
-    if request.method == "POST":
-        username = request.form.get("username")
-        email = request.form.get("email")
-        # if session.query(User).filter_by(email=email).first():
-        #     print "User with that email address already exists"
-        #     return
-
-        password = request.form.get("pwd")
-        password_2 = request.form.get("pwd2")
-        while not (password and password_2) or password != password_2:
-            password = request.form.get("pwd")
-            password_2 = request.form.get("pwd2")
-        user = User(username=username, email=email,
-                    password=bcrypt.generate_password_hash(password))
-        session.add(user)
-        session.commit()
-        session['logged_in'] = True
-        return redirect(url_for('index'))
-    else:
-        return render_template("new_user.html")
+    error = None
+    form = AddUserForm(request.form)
+    if form.validate_on_submit():
+        if form.password.data != form.password2.data:
+            error = "Passwords must match!"
+        else:
+            user = User(username=form.username.data, email=form.email.data,
+                    password=bcrypt.generate_password_hash(form.password.data))
+            session['logged_in'] = True
+            db.session.add(user)
+            db.session.commit()
+            return redirect(url_for('index'))
+        
+    return render_template('new_user.html', form=form, error=error)
 
 @app.route('/logout')
 @login_required
