@@ -42,8 +42,6 @@ def adduser():
     error = None
     form = AddUserForm(request.form)
     if form.validate_on_submit():
-        if form.password.data != form.password2.data:
-            error = "Passwords must match!"
         user = User.query.filter_by(username=form.username.data).first()
         email = User.query.filter_by(email=form.email.data).first()
         if user or email:

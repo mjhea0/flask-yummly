@@ -37,10 +37,10 @@
     </span>
   </p>
   <p>Re-enter password: <br>
-  {{ form.password2(placeholder="Re-enter password") }}
+  {{ form.confirm(placeholder="Re-enter password") }}
     <br><span class="error">
-      {% if form.password2.errors %}
-        {% for error in form.password2.errors %}
+      {% if form.confirm.errors %}
+        {% for error in form.confirm.errors %}
           {{ error }}
         {% endfor %}
       {% endif %}
