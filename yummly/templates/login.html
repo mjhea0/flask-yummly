@@ -3,7 +3,8 @@
 {% block content %}
 
 <h1>Please login</h1>
-<br>
+<a href="/new_user">New User? Click Here.</a>
+<br><br>
 <form class="form-signin" role="form" method="post" action="">
   {{ form.csrf_token }}
   <p>
@@ -28,5 +29,4 @@
   </p>
   <button class="btn btn-sm btn-success" type="submit">Sign in</button>
 </form>
-
 {% endblock %}

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Create Account</h2>
+<br>
+<form class="form-create" role="form" method="post" action="">
+  {{ form.csrf_token }}
+  <p>Username: <br>
+    {{ form.username(placeholder="Choose a username") }}
+    <br><span class="error">
+      {% if form.username.errors %}
+        {% for error in form.username.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+  </p>
+  <p>Email: <br>
+  {{ form.email(placeholder="Enter your email") }}
+    <br><span class="error">
+      {% if form.email.errors %}
+        {% for error in form.email.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+  </p>
+  <p>Password: <br>
+  {{ form.password(placeholder="Password") }}
+    <br><span class="error">
+      {% if form.password.errors %}
+        {% for error in form.password.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+  </p>
+  <p>Re-enter password: <br>
+  {{ form.confirm(placeholder="Re-enter password") }}
+    <br><span class="error">
+      {% if form.confirm.errors %}
+        {% for error in form.confirm.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </span>
+  </p><br>
+  <button class="btn btn-sm btn-success" type="submit">Create Account</button>
+</form>
+{% endblock %}

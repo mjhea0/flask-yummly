@@ -1,4 +1,4 @@
-from yummly import db
+from yummly import db, bcrypt
 
 
 class User(db.Model):
@@ -10,7 +10,7 @@ class User(db.Model):
     def __init__(self, username, email, password):
         self.username = username
         self.email = email
-        self.password = password
+        self.password = bcrypt.generate_password_hash(password)
 
     def __repr__(self):
         return '<User %r>' % self.username
