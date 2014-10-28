@@ -10,6 +10,7 @@ from functools import wraps
 from yummly.forms import LoginForm, AddUserForm
 from models import User
 
+
 def login_required(test):
     @wraps(test)
     def wrap(*args, **kwargs):
@@ -28,13 +29,13 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(
-                user.password, request.form['password']
-            ):
+                user.password, request.form['password']):
             session['logged_in'] = True
             return redirect(url_for('index'))
         else:
             error = 'Invalid username or password.'
     return render_template('login.html', form=form, error=error)
+
 
 @app.route('/new_user', methods=['GET', 'POST'])
 def adduser():
@@ -49,13 +50,14 @@ def adduser():
             error = "User already exists. Please try again"
         else:
             user = User(username=form.username.data, email=form.email.data,
-                    password=form.password.data)
+                        password=form.password.data)
             db.session.add(user)
             db.session.commit()
             session['logged_in'] = True
             return redirect(url_for('index'))
-        
+
     return render_template('new_user.html', form=form, error=error)
+
 
 @app.route('/logout')
 @login_required
@@ -107,5 +109,4 @@ def index():
         return jsonify(result), code
 
     else:
-
         return render_template("index.html")
