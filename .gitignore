@@ -1,12 +1,7 @@
 env
-<<<<<<< HEAD
-*.pyc
-*.DS_Store
-
-=======
 .pyc
 .DS_Store
 secret.py
->>>>>>> 109eb97d673815df23684997f84d41a0b0058ae1
+
 
 
