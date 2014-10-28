@@ -1,4 +1,4 @@
-from yummly import db, bcrypt
+from yummly import db
 from yummly.models import User
 
 db.create_all()
