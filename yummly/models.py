@@ -1,6 +1,7 @@
 from yummly import db, bcrypt
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
+
 
 class Recipe(db.Model):
 
@@ -17,6 +18,7 @@ class Recipe(db.Model):
 
     def __repr__(self):
         return '< %r>' % self.title
+
 
 class User(db.Model):
 
@@ -35,5 +37,3 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.username
-
-
