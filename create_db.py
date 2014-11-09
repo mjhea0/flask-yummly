@@ -7,7 +7,7 @@ db.create_all()
 # db.session.add(User("admin", "admin", "admin"))
 # db.session.add(User("user", "user", "admin2"))
 # db.session.add(Recipe("Test recipe", "http://yum.com"))
-db.session.commit()
+# db.session.commit()
 
 # sanity check!
 admin = User.query.filter_by(username='admin').first()
