@@ -8,7 +8,7 @@ import requests
 
 from functools import wraps
 from yummly.forms import LoginForm, AddUserForm
-from models import User
+from models import User, Recipe
 
 
 def login_required(test):
@@ -108,3 +108,39 @@ def index():
 
     else:
         return render_template("index.html")
+
+@app.route("/api/v1/recipes", methods=["GET", "POST"])
+def recipe_collection():
+    if request.method == "GET":
+        all_recipes = db.session.query(Recipe).all()
+        for recipe in all_recipes:
+            result = {
+                "recipe_id": recipe.id,
+                "title": recipe.title,
+                "url": recipe.url,
+                "user_id": recipe.user_id
+            }
+        return jsonify(result)
+    if request.method == "POST":
+        recipe_title = request.POST.get('recipe_title')
+        recipe_url = request.POST.get('recipe_url')
+        recipe = Recipe(title=recipe_title, url=recipe_url)
+        # db.session.add(Recipe(recipe_title, recipe_url))
+        # db.session.commit()
+        print recipe_title
+        return recipe_title
+
+@app.route("/api/v1/recipes/<int:recipe_id>", methods=["GET"])
+def recipe_element(recipe_id):
+    if request.method == "GET":
+        single_recipe = db.session.query(Recipe).filter_by(id=recipe_id).first()
+        if single_recipe:
+            result = {
+                "recipe_id": single_recipe.id,
+                "title": single_recipe.title,
+                "url": single_recipe.url,
+                "user_id": single_recipe.user_id
+            }
+            return jsonify(result)
+        else:
+            return jsonify({"Error": "Recipe does not exist."}), 404
