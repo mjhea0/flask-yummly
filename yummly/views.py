@@ -5,6 +5,8 @@ from yummly import app, bcrypt, db
 from yummly import api
 import random
 import requests
+from flask.ext.login import current_user, login_required, LoginManager
+
 
 from functools import wraps
 from yummly.forms import LoginForm, AddUserForm
@@ -21,7 +23,6 @@ def login_required(test):
             return redirect(url_for('login'))
     return wrap
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
@@ -31,6 +32,7 @@ def login():
         if user and bcrypt.check_password_hash(
                 user.password, request.form['password']):
             session['logged_in'] = True
+            login_user(user)
             return redirect(url_for('index'))
         else:
             error = 'Invalid username or password.'
@@ -110,9 +112,17 @@ def index():
         return render_template("index.html")
 
 @app.route("/api/v1/recipes", methods=["GET", "POST"])
+@login_required
 def recipe_collection():
+    """
+    1. grab recipes from database
+    2. pass recipes to list
+    3. return results to the template
+    """
     if request.method == "GET":
         all_recipes = db.session.query(Recipe).all()
+        recipes = []
+       
         for recipe in all_recipes:
             result = {
                 "recipe_id": recipe.id,
@@ -120,15 +130,18 @@ def recipe_collection():
                 "url": recipe.url,
                 "user_id": recipe.user_id
             }
-        return jsonify(result)
+            recipes.append(result)
+            result = recipes
+            code = 200
+        return jsonify(result=recipes), code
+        return render_template("recipes.html")
     if request.method == "POST":
-        recipe_title = request.POST.get('recipe_title')
-        recipe_url = request.POST.get('recipe_url')
+        recipe_title = request.form.get('recipe_title')
+        recipe_url = request.form.get('recipe_url')
         recipe = Recipe(title=recipe_title, url=recipe_url)
-        # db.session.add(Recipe(recipe_title, recipe_url))
-        # db.session.commit()
-        print recipe_title
-        return recipe_title
+        db.session.add(Recipe(recipe_title, recipe_url))
+        db.session.commit()
+        return recipe_title, recipe_url
 
 @app.route("/api/v1/recipes/<int:recipe_id>", methods=["GET"])
 def recipe_element(recipe_id):

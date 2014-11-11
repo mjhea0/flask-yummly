@@ -4,6 +4,23 @@ $(function() {
     $(".retry").hide()
     $("#links").hide()
 
+    $.ajax({
+        type: "GET",
+        url: "/api/v1/recipes",
+        dataType: 'json',
+        data : { result : [] },
+        success: function(result) {
+          console.log(result);
+          $.each(result, function(idx, obj) {
+              console.log(obj);
+              $.each(obj, function(idx, obj) {
+                console.log(obj.title, obj.url);
+                $("#recipe_list").html(obj.title+" "+obj.url);
+              });
+            });
+          }
+        });
+
 
     $('#post-form').on('submit', function(event){
    //      event.PreventDefault;
@@ -17,13 +34,14 @@ $(function() {
             url: "/",
             data : { ingredient_list : value },
             success: function(result) {
+              console.log(result);
                $(".boom").hide()
                $(".retry").show()
                $("#links").show()
                $("#errors").hide()
                $("#results").show()
                $("#results").html('<h3><a href="http://www.yummly.com/recipe/'+result.recipe_id+'" id="recipe_title">'+
-                   result.recipe_name+'</a></h3><p>Recipe Rating: '+result.recipe_rating+' out of 5</p><a href="http://www.yummly.com/recipe/'+result.recipe_id+
+                   result.recipe_name+'</a></h3><p>Rating: '+result.recipe_rating+' out of 5</p><a href="http://www.yummly.com/recipe/'+result.recipe_id+
                    '"><img src='+result.recipe_pic+' alt="Recipe photo" style="border-radius:50%;"></a><br><br>');
             },
             error: function(error) {
@@ -53,6 +71,9 @@ $(function() {
             data : { 'recipe_title' : recipe_title,
                       'recipe_url' : recipe_url
                    },
-            });
+            success: function(result) {
+              console.log(result);
+            }
+        });
     });
 });
