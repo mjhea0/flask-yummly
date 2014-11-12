@@ -5,7 +5,7 @@ from yummly import app, bcrypt, db
 from yummly import api
 import random
 import requests
-from flask.ext.login import current_user, login_required, LoginManager
+from flask.ext.login import current_user, login_required, LoginManager, login_user
 
 
 from functools import wraps
@@ -142,6 +142,10 @@ def recipe_collection():
         db.session.add(Recipe(recipe_title, recipe_url))
         db.session.commit()
         return recipe_title, recipe_url
+
+@app.route("/recipes", methods=["GET", "POST"])
+def saved_recipes():
+    return render_template("recipes.html")
 
 @app.route("/api/v1/recipes/<int:recipe_id>", methods=["GET"])
 def recipe_element(recipe_id):

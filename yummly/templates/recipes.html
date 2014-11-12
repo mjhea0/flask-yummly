@@ -1,6 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
+<script>
+
+$.ajax({
+  type: "GET",
+        url: "/api/v1/recipes",
+        dataType: 'json',
+        data : { result : [] },
+        success: function(result) {
+          console.log(result);
+          $.each(result, function(idx, obj) {
+              console.log(obj);
+              $.each(obj, function(idx, obj) {
+                console.log(obj.title, obj.url);
+                $("#recipe_list").html(obj.title+" "+obj.url);
+              });
+            });
+          }
+        });
+</script>
 
 <h1>Saved Recipes</h1>
 <br><br>
