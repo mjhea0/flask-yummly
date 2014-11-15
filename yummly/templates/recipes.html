@@ -1,34 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-<script>
-
-$.ajax({
-  type: "GET",
-        url: "/api/v1/recipes",
-        dataType: 'json',
-        data : { result : [] },
-        success: function(result) {
-          console.log(result);
-          $.each(result, function(idx, obj) {
-              console.log(obj);
-              $.each(obj, function(idx, obj) {
-                console.log(obj.title, obj.url);
-                $("#recipe_list").html(obj.title+" "+obj.url);
-              });
-            });
-          }
-        });
-</script>
-
-<h1>Saved Recipes</h1>
+<br>
+<div name="top">
+    <nav class="top-navigation">
+      <li><a href="/">Home</a></li>
+      <li><a href="/logout">Logout</a></li>
+    </nav>
+  </div>
+<h2>Saved Recipes</h2>
 <br><br>
 
 
-  <p id="recipe_list">
-  
-  </p>
+<p id="recipe_list">
+
+</p>
+
     
-  <button class="btn btn-sm btn-success" type="delete">Delete</button>
 
 {% endblock %}

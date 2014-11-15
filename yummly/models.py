@@ -12,9 +12,10 @@ class Recipe(db.Model):
     url = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, ForeignKey('users.id'))
 
-    def __init__(self, title, url):
+    def __init__(self, title, url, user_id):
         self.title = title
         self.url = url
+        self.user_id = user_id
 
     def __repr__(self):
         return '< %r>' % self.title

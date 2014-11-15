@@ -8,19 +8,19 @@
 
   <div id="main">
       
-    <a href="/logout">Logout</a>
+    <a href="/logout">Logout</a><br>
+    <a href="/recipes">Saved Recipes</a>
         <h1>Recipe Search!</h1>
           <p class="lead">What's for dinner?</p>
   </div>
 
     <!-- search form -->
     <div id="search">
-      <h3>Step One: Enter the ingredients you have.</h3>
+      <h3>Enter the ingredients you have.</h3>
       <form role="form" method="POST" id="post-form" onsubmit="return false">
         <div class="form-group">
         <center><input type="text" class="form-control" name="ingredient"   placeholder="for example: chocolate, kale, high fructose corn syrup..." style="max-width: 400px;" required></center>
         </div>
-        <h3>Step Two: Click the button.</h3>
         <button type="submit" class="btn btn-lg btn-info boom">Go!</button>
         <button type="submit" class="btn btn-lg btn-info retry">I don't want this. Send me another result!</button>
       </form>

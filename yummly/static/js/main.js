@@ -8,20 +8,31 @@ $(function() {
         type: "GET",
         url: "/api/v1/recipes",
         dataType: 'json',
-        data : { result : [] },
         success: function(result) {
-          console.log(result);
+          // console.log(result);
           $.each(result, function(idx, obj) {
               console.log(obj);
               $.each(obj, function(idx, obj) {
-                console.log(obj.title, obj.url);
-                $("#recipe_list").html(obj.title+" "+obj.url);
+                console.log(obj.title, obj.url, obj.recipe_id);
+                $("#recipe_list").append('<p id='+obj.recipe_id+'><a href='+obj.url+'>'+obj.title+'  </a><button type="button" id="delete" class="btn btn-default btn-sm" action="/recipe/'+obj.recipe_id+'/delete" method="post" >Delete</button></p>');
+                $('#delete').on('click', function(event){
+                  $.ajax({
+                    type: "POST",
+                    url: "/recipes",
+                    data : { 'recipe_id' : recipe_id },
+                    success: function(result) {
+                    },
+                  });
+                });
               });
             });
           }
         });
 
 
+    
+
+    
     $('#post-form').on('submit', function(event){
    //      event.PreventDefault;
            console.log("yay!")

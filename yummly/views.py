@@ -120,7 +120,7 @@ def recipe_collection():
     3. return results to the template
     """
     if request.method == "GET":
-        all_recipes = db.session.query(Recipe).all()
+        all_recipes = db.session.query(Recipe).filter_by(user_id=current_user.get_id())
         recipes = []
        
         for recipe in all_recipes:
@@ -138,14 +138,24 @@ def recipe_collection():
     if request.method == "POST":
         recipe_title = request.form.get('recipe_title')
         recipe_url = request.form.get('recipe_url')
-        recipe = Recipe(title=recipe_title, url=recipe_url)
-        db.session.add(Recipe(recipe_title, recipe_url))
+        user = current_user.get_id()
+        print user
+        recipe = Recipe(title=recipe_title, url=recipe_url, user_id=user)
+        db.session.add(Recipe(recipe_title, recipe_url, user))
         db.session.commit()
         return recipe_title, recipe_url
 
 @app.route("/recipes", methods=["GET", "POST"])
 def saved_recipes():
     return render_template("recipes.html")
+
+@app.route("/recipe/<int:recipe_id>/delete", methods=["POST"])
+def remove_recipe(recipe_id):
+    if request.method =="POST":
+        recipe_id = recipe_id
+        recipe = db.session.query(Recipe).filter_by(id=recipe_id)
+        db.session.commit()
+        return redirect(url_for("recipes"))
 
 @app.route("/api/v1/recipes/<int:recipe_id>", methods=["GET"])
 def recipe_element(recipe_id):

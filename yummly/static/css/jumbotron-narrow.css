@@ -86,3 +86,17 @@ h1 {
   font-weight: 100;
   font-size: 40px;
 }
+.top-navigation a {
+    float: left;
+    font-size: 16px;  
+    text-decoration: none;
+}
+.top-navigation li {
+    display: inline-block;
+    margin-left: 10px;
+}
+#recipe_list {
+  font-size: 15px;
+  text-align: left;
+  padding-left: 250px;
+}
