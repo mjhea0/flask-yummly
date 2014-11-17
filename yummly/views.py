@@ -151,9 +151,9 @@ def saved_recipes():
 
 @app.route("/recipe/<int:recipe_id>/delete", methods=["POST"])
 def remove_recipe(recipe_id):
-    if request.method =="POST":
+    if request.method == "POST":
         recipe_id = recipe_id
-        recipe = db.session.query(Recipe).filter_by(id=recipe_id)
+        recipe = db.session.query(Recipe).filter_by(id=recipe_id).delete()
         db.session.commit()
         return redirect(url_for("recipes"))
 
