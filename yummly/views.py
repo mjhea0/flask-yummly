@@ -149,15 +149,7 @@ def recipe_collection():
 def saved_recipes():
     return render_template("recipes.html")
 
-@app.route("/recipe/<int:recipe_id>/delete", methods=["POST"])
-def remove_recipe(recipe_id):
-    if request.method == "POST":
-        recipe_id = recipe_id
-        recipe = db.session.query(Recipe).filter_by(id=recipe_id).delete()
-        db.session.commit()
-        return redirect(url_for("recipes"))
-
-@app.route("/api/v1/recipes/<int:recipe_id>", methods=["GET"])
+@app.route("/api/v1/recipes/<int:recipe_id>", methods=["GET", "POST"])
 def recipe_element(recipe_id):
     if request.method == "GET":
         single_recipe = db.session.query(Recipe).filter_by(id=recipe_id).first()
@@ -171,3 +163,11 @@ def recipe_element(recipe_id):
             return jsonify(result)
         else:
             return jsonify({"Error": "Recipe does not exist."}), 404
+
+    if request.method == "POST":
+        try:
+            db.session.query(Recipe).filter_by(id=recipe_id).delete()
+            db.session.commit()
+            return jsonify({"Success": "Recipe deleted."}), 200
+        except:
+            return jsonify({"Error": "Recipe does not exist."}), 500

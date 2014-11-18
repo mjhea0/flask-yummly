@@ -3,7 +3,17 @@ $(function() {
 
     $(".retry").hide()
     $("#links").hide()
+    getRecipes();
 
+    $(document).on('click', "#delete", function(event){
+      console.log("delete");
+      var elementID = $(this).attr("name");
+      console.log(elementID);
+      deleteRecipe(elementID);
+      });
+
+
+    function getRecipes() {
     $.ajax({
         type: "GET",
         url: "/api/v1/recipes",
@@ -14,23 +24,30 @@ $(function() {
               console.log(obj);
               $.each(obj, function(idx, obj) {
                 console.log(obj.title, obj.url, obj.recipe_id);
-                $("#recipe_list").append('<p id='+obj.recipe_id+'><a href='+obj.url+'>'+obj.title+'  </a><button type="button" id="delete" class="btn btn-default btn-sm" action="/recipe/'+obj.recipe_id+'/delete" method="post" >Delete</button></p>');
+                $("#recipe_list").prepend('<p id='+obj.recipe_id+'><a href='+obj.url+'>'+obj.title+'  </a><button type="button" id="delete" class="btn btn-default btn-sm" name="'+obj.recipe_id+'" >Delete</button></p>');
 
               });
             });
           }
         });
+  }
 
-    $('#delete').on('click', function(event){
-      console.log("delete");
+    function deleteRecipe(id) {
+      console.log("delete function");
         $.ajax({
           type: "POST",
-          url: "/recipes",
-          data : { 'recipe_id' : obj.recipe_id },
+          url: "/api/v1/recipes/"+id,
           success: function(result) {
+            console.log(result);
+            location.reload();
+          },
+          error: function(error) {
+            console.log(error);
+            location.reload();
           },
         });
-      });
+    }
+
 
 
     
