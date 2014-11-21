@@ -1,2 +1,0 @@
-APP_ID="6183a5af"
-APP_KEY="c0c6cc9a620ce0a2aa4ea3f6a67d9f15"
