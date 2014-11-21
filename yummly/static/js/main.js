@@ -21,10 +21,10 @@ $(function() {
         success: function(result) {
           // console.log(result);
           $.each(result, function(idx, obj) {
-              console.log(obj);
+              // console.log(obj);
               $.each(obj, function(idx, obj) {
-                console.log(obj.title, obj.url, obj.recipe_id);
-                $("#recipe_list").prepend('<p id='+obj.recipe_id+'><a href='+obj.url+'>'+obj.title+'  </a><button type="button" id="delete" class="btn btn-default btn-sm" name="'+obj.recipe_id+'" >Delete</button></p>');
+                // console.log(obj.title, obj.url, obj.recipe_id);
+                $("#recipe_list").append('<p id='+obj.recipe_id+'><a href='+obj.url+'>'+obj.title+'  </a><button type="button" id="delete" class="btn btn-default btn-sm" name="'+obj.recipe_id+'" >Delete</button></p>');
 
               });
             });
@@ -39,7 +39,7 @@ $(function() {
           url: "/api/v1/recipes/"+id,
           success: function(result) {
             console.log(result);
-            location.reload();
+            $('#'+id+'').fadeOut(300);
           },
           error: function(error) {
             console.log(error);
@@ -47,11 +47,6 @@ $(function() {
           },
         });
     }
-
-
-
-    
-
     
     $('#post-form').on('submit', function(event){
    //      event.PreventDefault;
@@ -95,6 +90,7 @@ $(function() {
       var recipe_title = $("#recipe_title").text();
       console.log(recipe_title);
       console.log(recipe_url);
+      alert("Your recipe has been saved.");
 
       $.ajax({
             type: "POST",
@@ -104,6 +100,7 @@ $(function() {
                    },
             success: function(result) {
               console.log(result);
+
             }
         });
     });
