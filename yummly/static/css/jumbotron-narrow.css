@@ -4,7 +4,7 @@ body {
   font-family: 'Quattrocento Sans', sans-serif;
 }
 h1 {
-  font-weight: 300;
+  font-weight: 200;
   font-size: 40px;
 }
 
@@ -50,10 +50,14 @@ h1 {
 .jumbotron {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
+  padding-top: 0;
 }
 .jumbotron .btn {
-  padding: 14px 24px;
-  font-size: 21px;
+  padding: 10px 20px;
+  font-size: 20px;
+}
+.jumbotron h1 {
+  font-size: 45px;
 }
 
 /* Supporting marketing content */
@@ -82,9 +86,8 @@ h1 {
     border-bottom: 0;
   }
 }
-.main h1 {
-  font-weight: 100;
-  font-size: 40px;
+.search {
+  font-size: 30px;
 }
 .top-navigation a {
     float: right;

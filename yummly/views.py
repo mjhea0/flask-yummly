@@ -5,7 +5,7 @@ from yummly import app, bcrypt, db
 from yummly import api
 import random
 import requests
-from flask.ext.login import current_user, login_required, LoginManager, login_user
+from flask.ext.login import current_user, login_required, LoginManager, login_user, logout_user
 
 
 from functools import wraps
@@ -13,15 +13,15 @@ from yummly.forms import LoginForm, AddUserForm
 from models import User, Recipe
 
 
-def login_required(test):
-    @wraps(test)
-    def wrap(*args, **kwargs):
-        if 'logged_in' in session:
-            return test(*args, **kwargs)
-        else:
-            flash('You need to login first.')
-            return redirect(url_for('login'))
-    return wrap
+# def login_required(test):
+#     @wraps(test)
+#     def wrap(*args, **kwargs):
+#         if 'logged_in' in session:
+#             return test(*args, **kwargs)
+#         else:
+#             flash('You need to login first.')
+#             return redirect(url_for('login'))
+#     return wrap
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -62,7 +62,7 @@ def adduser():
 @app.route('/logout')
 @login_required
 def logout():
-    session.pop('logged_in', None)
+    logout_user()
     flash('You were logged out.')
     return redirect(url_for('login'))
 
@@ -146,6 +146,7 @@ def recipe_collection():
         return recipe_title, recipe_url
 
 @app.route("/recipes", methods=["GET", "POST"])
+@login_required
 def saved_recipes():
     return render_template("recipes.html")
 

@@ -12,8 +12,13 @@
   <body>
 <nav class="top-navigation">
       <li><a href="/">Home</a></li>
-      <li><a href="/logout">Logout</a></li>
-      <li><a href="/recipes">Saved Recipes</a></li>
+      {% if current_user.is_authenticated() %}
+        <li><a href="/logout">Logout</a></li>
+        <li><a href="/recipes">Saved Recipes</a></li>
+      {% else %}
+        <li><a href="/login">Login</a></li>
+      {% endif %}
+      
     </nav>
 
 

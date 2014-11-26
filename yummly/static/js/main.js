@@ -3,6 +3,7 @@ $(function() {
 
     $(".retry").hide()
     $("#links").hide()
+    $("#save").hide()
     getRecipes();
 
     $(document).on('click', "#delete", function(event){
@@ -50,11 +51,14 @@ $(function() {
     
     $('#post-form').on('submit', function(event){
    //      event.PreventDefault;
-           console.log("yay!")
-           $("#errors").hide()
-           $("#results").hide()
-           value = $('input[name="ingredient"]').val();
-           console.log(value)
+          console.log("yay!")
+          $("#errors").hide()
+          $("#results").hide()
+          value = $('input[name="ingredient"]').val();
+          console.log(value)
+          $("#save").empty();
+          $("#save").css('background-color','#fff');
+          $("#save").append('Save Recipe');
          $.ajax({
             type: "POST",
             url: "/",
@@ -63,6 +67,7 @@ $(function() {
               console.log(result);
                $(".boom").hide()
                $(".retry").show()
+               $("#save").show()
                $("#links").show()
                $("#errors").hide()
                $("#results").show()
@@ -90,7 +95,9 @@ $(function() {
       var recipe_title = $("#recipe_title").text();
       console.log(recipe_title);
       console.log(recipe_url);
-      alert("Your recipe has been saved.");
+      $("#save").empty();
+      $(this).css('background-color','#5bc0de');
+      $("#save").append('Recipe saved!');
 
       $.ajax({
             type: "POST",
