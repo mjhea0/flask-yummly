@@ -11,11 +11,15 @@ class Recipe(db.Model):
     title = db.Column(db.String, nullable=False)
     url = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, ForeignKey('users.id'))
+    pic = db.Column(db.String)
+    ingredients = db.Column(db.String)
 
-    def __init__(self, title, url, user_id):
+    def __init__(self, title, url, user_id, pic, ingredients):
         self.title = title
         self.url = url
         self.user_id = user_id
+        self.pic = pic
+        self.ingredients = ingredients
 
     def __repr__(self):
         return '< %r>' % self.title

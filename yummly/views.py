@@ -79,11 +79,13 @@ def index():
 
     if request.method == "POST":
         ingredient_list = request.form.get('ingredient_list')
+        print ingredient_list
         recipe = []
 
         try:
             response = api.get_ingredients(ingredient_list)
             recipe = random.choice(response["matches"])
+            print recipe
 
             ingredients = []
             for i in recipe['ingredients']:
@@ -128,7 +130,9 @@ def recipe_collection():
                 "recipe_id": recipe.id,
                 "title": recipe.title,
                 "url": recipe.url,
-                "user_id": recipe.user_id
+                "user_id": recipe.user_id,
+                "recipe_pic": recipe.pic,
+                "ingredients": recipe.ingredients
             }
             recipes.append(result)
             result = recipes
@@ -139,11 +143,13 @@ def recipe_collection():
         recipe_title = request.form.get('recipe_title')
         recipe_url = request.form.get('recipe_url')
         user = current_user.get_id()
-        print user
-        recipe = Recipe(title=recipe_title, url=recipe_url, user_id=user)
-        db.session.add(Recipe(recipe_title, recipe_url, user))
+        recipe_pic = request.form.get('recipe_pic')
+        recipe_ingredients = request.form.get('recipe_ingredients')
+        recipe = Recipe(title=recipe_title, url=recipe_url, user_id=user, pic=recipe_pic, ingredients=recipe_ingredients)
+        db.session.add(Recipe(recipe_title, recipe_url, user, recipe_pic, recipe_ingredients))
         db.session.commit()
-        return recipe_title, recipe_url
+        print recipe_title, recipe_url, recipe_pic, recipe_ingredients
+        return recipe_title, recipe_url, recipe_pic, recipe_ingredients
 
 @app.route("/recipes", methods=["GET", "POST"])
 @login_required

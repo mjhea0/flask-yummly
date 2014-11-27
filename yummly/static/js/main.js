@@ -20,18 +20,15 @@ $(function() {
         url: "/api/v1/recipes",
         dataType: 'json',
         success: function(result) {
-          // console.log(result);
           $.each(result, function(idx, obj) {
-              // console.log(obj);
               $.each(obj, function(idx, obj) {
-                // console.log(obj.title, obj.url, obj.recipe_id);
-                $("#recipe_list").append('<p id='+obj.recipe_id+'><a href='+obj.url+'>'+obj.title+'  </a><button type="button" id="delete" class="btn btn-default btn-sm" name="'+obj.recipe_id+'" >Delete</button></p>');
-
+                // console.log(obj.title, obj.url, obj.recipe_id, obj.recipe_pic, obj.ingredients);
+                $("#recipe_list").append('<tr id='+obj.recipe_id+'><td><img src='+obj.recipe_pic+' alt="Recipe photo" style="border-radius:50%;"></a></td><td><a href='+obj.url+'>'+obj.title+'  </a></td><td><button type="button" id="delete" class="btn btn-default btn-sm" name="'+obj.recipe_id+'" >Delete</button></td><td id="recipe_ingredients" class="hidden">'+obj.ingredients+'</td></tr>');
               });
-            });
-          }
-        });
-  }
+          });
+        }
+      });
+    }
 
     function deleteRecipe(id) {
       console.log("delete function");
@@ -55,7 +52,6 @@ $(function() {
           $("#errors").hide()
           $("#results").hide()
           value = $('input[name="ingredient"]').val();
-          console.log(value)
           $("#save").empty();
           $("#save").css('background-color','#fff');
           $("#save").append('Save Recipe');
@@ -73,7 +69,7 @@ $(function() {
                $("#results").show()
                $("#results").html('<h3><a href="http://www.yummly.com/recipe/'+result.recipe_id+'" id="recipe_title">'+
                    result.recipe_name+'</a></h3><p>Rating: '+result.recipe_rating+' out of 5</p><a href="http://www.yummly.com/recipe/'+result.recipe_id+
-                   '"><img src='+result.recipe_pic+' alt="Recipe photo" style="border-radius:50%;"></a><br><br>');
+                   '"><img src='+result.recipe_pic+' alt="Recipe photo" style="border-radius:50%;"></a><p class="hidden">'+result.recipe_ingredients+'</p><br><br>');
             },
             error: function(error) {
                 console.log(error);
@@ -93,8 +89,8 @@ $(function() {
     $("#save").on('click', function(){
       var recipe_url = $("#recipe_title").attr('href');
       var recipe_title = $("#recipe_title").text();
-      console.log(recipe_title);
-      console.log(recipe_url);
+      var recipe_pic = document.getElementsByTagName('img')[0].currentSrc;
+      var recipe_ingredients = $(".hidden").text();
       $("#save").empty();
       $(this).css('background-color','#5bc0de');
       $("#save").append('Recipe saved!');
@@ -103,11 +99,12 @@ $(function() {
             type: "POST",
             url: "/api/v1/recipes",
             data : { 'recipe_title' : recipe_title,
-                      'recipe_url' : recipe_url
+                      'recipe_url' : recipe_url,
+                      'recipe_pic' : recipe_pic,
+                      'recipe_ingredients' : recipe_ingredients
                    },
             success: function(result) {
               console.log(result);
-
             }
         });
     });

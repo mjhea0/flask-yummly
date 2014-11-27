@@ -102,5 +102,31 @@ h1 {
 }
 #recipe_list {
   font-size: 15px;
-  text-align: center;
+  text-align: left;
+}
+table {
+  border-collapse: collapse;
+/*  border-spacing: 0;*/
+  width: 100%;
+  border: 1px LightGray;
+}
+tr, td {
+  border-left: none;
+  border-right: none;
+  border-radius: 10px;
+  border-collapse: collapse;
+}
+tr:hover {
+  background: #fbf8e9;
+  transition: all 0.1s ease-in-out;     
+}
+td {
+  padding: 10px;
+}
+table img {
+  height: 50px;
+  width: 50px;
+}
+.hidden {
+  display: none;
 }
