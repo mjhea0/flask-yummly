@@ -11,10 +11,15 @@ class Recipe(db.Model):
     title = db.Column(db.String, nullable=False)
     url = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, ForeignKey('users.id'))
+    pic = db.Column(db.String)
+    ingredients = db.Column(db.String)
 
-    def __init__(self, title, url):
+    def __init__(self, title, url, user_id, pic, ingredients):
         self.title = title
         self.url = url
+        self.user_id = user_id
+        self.pic = pic
+        self.ingredients = ingredients
 
     def __repr__(self):
         return '< %r>' % self.title
@@ -34,6 +39,18 @@ class User(db.Model):
         self.username = username
         self.email = email
         self.password = bcrypt.generate_password_hash(password)
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return unicode(self.id)
 
     def __repr__(self):
         return '<User %r>' % self.username

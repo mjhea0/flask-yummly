@@ -8,21 +8,20 @@
 
   <div id="main">
 
-    <a href="/logout">Logout</a>
         <h1>Recipe Search!</h1>
-          <p class="lead">What's for dinner?</p>
+          <p class="lead">What's for dinner?
+          <br>Enter the ingredients you have.</p>
   </div>
 
     <!-- search form -->
     <div id="search">
-      <h3>Step One: Enter the ingredients you have.</h3>
       <form role="form" method="POST" id="post-form" onsubmit="return false">
         <div class="form-group">
         <center><input type="text" class="form-control" name="ingredient"   placeholder="for example: chocolate, kale, high fructose corn syrup..." style="max-width: 400px;" required></center>
         </div>
-        <h3>Step Two: Click the button.</h3>
         <button type="submit" class="btn btn-lg btn-info boom">Go!</button>
-        <button type="submit" class="btn btn-lg btn-info retry">I don't want this. Send me another result!</button>
+        <button type="submit" class="btn btn-default btn-small retry">Try again</button>
+        <button type="button" class="btn btn-default btn-small save">Save Recipe</button>
       </form>
     </div>
 </div>
@@ -34,7 +33,7 @@
 
   <br>
 <div id="links">
-  <button type="button" id="save" class="btn btn-default btn-sm">Save Recipe</button>
+  <!-- <button type="button" id="save" class="btn btn-default btn-sm">Save Recipe</button> -->
   <p class="new-link"><a href="#">New Search?</a></p>
 </div>
 
