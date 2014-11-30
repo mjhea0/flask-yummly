@@ -1,27 +1,15 @@
-from flask import render_template, request, jsonify, \
-    session, flash, redirect, url_for
-
-from yummly import app, bcrypt, db
-from yummly import api
 import random
 import requests
-from flask.ext.login import current_user, login_required, LoginManager, login_user, logout_user
 
+from flask import render_template, request, jsonify, \
+    session, flash, redirect, url_for
+from flask.ext.login import current_user, login_required, \
+    login_user, logout_user
 
-from functools import wraps
+from yummly import app, bcrypt, db, api
 from yummly.forms import LoginForm, AddUserForm
 from models import User, Recipe
 
-
-# def login_required(test):
-#     @wraps(test)
-#     def wrap(*args, **kwargs):
-#         if 'logged_in' in session:
-#             return test(*args, **kwargs)
-#         else:
-#             flash('You need to login first.')
-#             return redirect(url_for('login'))
-#     return wrap
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -113,6 +101,7 @@ def index():
     else:
         return render_template("index.html")
 
+
 @app.route("/api/v1/recipes", methods=["GET", "POST"])
 @login_required
 def recipe_collection():
@@ -122,7 +111,8 @@ def recipe_collection():
     3. return results to the template
     """
     if request.method == "GET":
-        all_recipes = db.session.query(Recipe).filter_by(user_id=current_user.get_id())
+        all_recipes = db.session.query(Recipe).filter_by(
+            user_id=current_user.get_id())
         recipes = []
 
         for recipe in all_recipes:
@@ -145,15 +135,24 @@ def recipe_collection():
         user = current_user.get_id()
         recipe_pic = request.form.get('recipe_pic')
         recipe_ingredients = request.form.get('recipe_ingredients')
-        recipe = Recipe(title=recipe_title, url=recipe_url, user_id=user, pic=recipe_pic, ingredients=recipe_ingredients)
-        db.session.add(Recipe(recipe_title, recipe_url, user, recipe_pic, recipe_ingredients))
+        recipe = Recipe(
+            title=recipe_title,
+            url=recipe_url,
+            user_id=user,
+            pic=recipe_pic,
+            ingredients=recipe_ingredients
+        )
+        db.session.add(Recipe(
+            recipe_title, recipe_url, user, recipe_pic, recipe_ingredients))
         db.session.commit()
         return recipe_title, recipe_url, recipe_pic, recipe_ingredients
+
 
 @app.route("/recipes", methods=["GET", "POST"])
 @login_required
 def saved_recipes():
     return render_template("recipes.html")
+
 
 @app.route("/api/v1/recipes/<int:recipe_id>", methods=["GET", "POST"])
 def recipe_element(recipe_id):

@@ -1,6 +1,7 @@
 # view tests
-from yummly import app
+
 import unittest
+from yummly import app
 
 
 class RecipeSearchViewTests(unittest.TestCase):
