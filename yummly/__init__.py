@@ -14,7 +14,8 @@ login_manager.init_app(app)
 
 import api
 import views
-from models import User 
+
+from models import User
 login_manager.login_view = "login"
 
 

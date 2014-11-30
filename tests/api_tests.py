@@ -1,12 +1,11 @@
 # tests
-import os
+
 import unittest
-from yummly import app, api
+from yummly import app
 from secret import APP_KEY, APP_ID
 
 import requests
-import responses # mocking requests
-
+import responses  # mocking requests
 
 
 class RecipeSearchTests(unittest.TestCase):
@@ -42,14 +41,7 @@ class RecipeSearchTests(unittest.TestCase):
             "http://api.yummly.com/v1/api/recipes",
             params={'_app_id': APP_ID, '_app_key': APP_KEY, 'q': ingredient}
         )
-            
+
 
 if __name__ == "__main__":
     unittest.main()
-
-
-
-
-
-
-        
