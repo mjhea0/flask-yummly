@@ -122,8 +122,8 @@ def recipe_collection():
             }
         return jsonify(result)
     if request.method == "POST":
-        recipe_title = request.POST.get('recipe_title')
-        recipe_url = request.POST.get('recipe_url')
+        recipe_title = request.form.get('recipe_title')
+        recipe_url = request.form.get('recipe_url')
         recipe = Recipe(title=recipe_title, url=recipe_url)
         # db.session.add(Recipe(recipe_title, recipe_url))
         # db.session.commit()
