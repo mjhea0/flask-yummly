@@ -148,7 +148,6 @@ def recipe_collection():
         recipe = Recipe(title=recipe_title, url=recipe_url, user_id=user, pic=recipe_pic, ingredients=recipe_ingredients)
         db.session.add(Recipe(recipe_title, recipe_url, user, recipe_pic, recipe_ingredients))
         db.session.commit()
-        print recipe_title, recipe_url, recipe_pic, recipe_ingredients
         return recipe_title, recipe_url, recipe_pic, recipe_ingredients
 
 @app.route("/recipes", methods=["GET", "POST"])
