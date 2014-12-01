@@ -130,22 +130,25 @@ def recipe_collection():
         return jsonify(result=recipes), code
         return render_template("recipes.html")
     if request.method == "POST":
-        recipe_title = request.form.get('recipe_title')
-        recipe_url = request.form.get('recipe_url')
-        user = current_user.get_id()
-        recipe_pic = request.form.get('recipe_pic')
-        recipe_ingredients = request.form.get('recipe_ingredients')
-        recipe = Recipe(
-            title=recipe_title,
-            url=recipe_url,
-            user_id=user,
-            pic=recipe_pic,
-            ingredients=recipe_ingredients
-        )
-        db.session.add(Recipe(
-            recipe_title, recipe_url, user, recipe_pic, recipe_ingredients))
-        db.session.commit()
-        return recipe_title, recipe_url, recipe_pic, recipe_ingredients
+        try:
+            recipe_title = request.form.get('recipe_title')
+            recipe_url = request.form.get('recipe_url')
+            user = current_user.get_id()
+            recipe_pic = request.form.get('recipe_pic')
+            recipe_ingredients = request.form.get('recipe_ingredients')
+            recipe = Recipe(
+                title=recipe_title,
+                url=recipe_url,
+                user_id=user,
+                pic=recipe_pic,
+                ingredients=recipe_ingredients
+            )
+            db.session.add(Recipe(
+                recipe_title, recipe_url, user, recipe_pic, recipe_ingredients))
+            db.session.commit()
+            return jsonify({"Success": "Recipe added."}), 200
+        except:
+            return jsonify({"Error": "Recipe does not exist."}), 500
 
 
 @app.route("/recipes", methods=["GET", "POST"])
@@ -163,7 +166,10 @@ def recipe_element(recipe_id):
                 "recipe_id": single_recipe.id,
                 "title": single_recipe.title,
                 "url": single_recipe.url,
-                "user_id": single_recipe.user_id
+                "user_id": single_recipe.user_id,
+                "user_id": recipe.user_id,
+                "recipe_pic": recipe.pic,
+                "ingredients": recipe.ingredients
             }
             return jsonify(result)
         else:
