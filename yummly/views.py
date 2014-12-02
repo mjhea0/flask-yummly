@@ -128,7 +128,7 @@ def recipe_collection():
             result = recipes
             code = 200
         return jsonify(result=recipes), code
-        return render_template("recipes.html")
+
     if request.method == "POST":
         try:
             recipe_title = request.form.get('recipe_title')
@@ -148,7 +148,7 @@ def recipe_collection():
             db.session.commit()
             return jsonify({"Success": "Recipe added."}), 200
         except:
-            return jsonify({"Error": "Recipe does not exist."}), 500
+            return jsonify({"Error": "Recipe not saved."}), 500
 
 
 @app.route("/recipes", methods=["GET", "POST"])
