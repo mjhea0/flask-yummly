@@ -7,8 +7,6 @@ from flask.ext.login import LoginManager
 
 
 app = Flask(__name__)
-# config_path = os.environ.get("CONFIG_PATH", "yummly.config.Config")
-# app.config.from_object(config_path)
 app.config.from_object(os.environ['APP_SETTINGS'])
 
 print os.environ['APP_SETTINGS']
