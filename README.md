@@ -19,6 +19,6 @@ Recipes -> Ingredients
 1. Get Database URI - `heroku config | grep HEROKU_POSTGRESQL`
 1. Add URI to `ProductionConfig` in *yummly/config.py* (i.e., - `SQLALCHEMY_DATABASE_URI = "foobar"`)
 1. Set Environment variables = `heroku config:set APP_SETTINGS="yummly.config.DevelopmentConfig"`
-1. Create DB - `python create_db.py`
+1. Create DB - `heroku run python create_db.py`
 
 Profit!
