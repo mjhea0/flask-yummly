@@ -1,6 +1,5 @@
 env
 *.pyc
 .DS_Store
-secret.py
 *.db
 *.sqlite
