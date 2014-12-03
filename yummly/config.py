@@ -8,5 +8,5 @@ class DevelopmentConfig(BaseConfig):
 
 
 class ProductionConfig(BaseConfig):
-    SQLALCHEMY_DATABASE_URI = "postgres://zgaejodwfynffw:cF8w21iRoZ9cpKfmwvFFisksk_@ec2-54-83-199-115.compute-1.amazonaws.com:5432/dairfoj5de3au0"
+    SQLALCHEMY_DATABASE_URI = "postgres://oedvvkohmyajhc:XV2GVjFLQm55SIb7VOuYCprAot@ec2-54-163-248-144.compute-1.amazonaws.com:5432/depat5j28d4ja3"
     DEBUG = False
