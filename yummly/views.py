@@ -76,20 +76,23 @@ def index():
         try:
             response = api.get_ingredients(ingredient_list)
             recipe = random.choice(response["matches"])
-            # print response.from_cache
-            # print recipe
+            print recipe
 
             ingredients = []
             for i in recipe['ingredients']:
                 ingredients.append(i)
 
+            try:
+                image = recipe['imageUrlsBySize']['90'].replace(
+                    's90-c', 's230-c')
+            except:
+                image = 'https://static.apitools.com/logos/yummly.png'
+
             result = {
                 "recipe_id": recipe["id"],
                 "recipe_name": recipe["recipeName"],
-                "recipe_pic": recipe['imageUrlsBySize']['90'].replace(
-                    's90-c', 's230-c'),
+                "recipe_pic": image,
                 "recipe_rating": recipe['rating'],
-                "recipe_flavors": recipe['flavors'],
                 "recipe_ingredients": ingredients
             }
             code = 200
