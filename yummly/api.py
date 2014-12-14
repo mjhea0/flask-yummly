@@ -15,4 +15,5 @@ def get_ingredients(ingredient_list):
             'maxResult': 100
         }
     )
+    print res.from_cache
     return res.json()

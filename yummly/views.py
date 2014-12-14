@@ -1,6 +1,10 @@
 import random
 import requests
 
+import requests_cache
+
+requests_cache.install_cache('demo_cache')
+
 from flask import render_template, request, jsonify, \
     session, flash, redirect, url_for
 from flask.ext.login import current_user, login_required, \
@@ -67,13 +71,13 @@ def index():
 
     if request.method == "POST":
         ingredient_list = request.form.get('ingredient_list')
-        print ingredient_list
         recipe = []
 
         try:
             response = api.get_ingredients(ingredient_list)
             recipe = random.choice(response["matches"])
-            print recipe
+            # print response.from_cache
+            # print recipe
 
             ingredients = []
             for i in recipe['ingredients']:
