@@ -3,4 +3,4 @@ env
 .DS_Store
 *.db
 *.sqlite
-secret.py
+
