@@ -9,7 +9,7 @@ db.session.add(User("user", "user", "admin2"))
 db.session.add(Recipe(
     "Pizza Bianca",
     "http://www.yummly.com/recipe/Pizza-Bianca-with-Anchovies-_-Kale-633201",
-    "3",
+    "1",
     "pic",
     "ingredients")
 )
