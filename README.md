@@ -21,4 +21,4 @@ Recipes -> Ingredients
 1. Set Environment variables = `heroku config:set APP_SETTINGS="yummly.config.DevelopmentConfig"`
 1. Create DB - `heroku run python create_db.py`
 
-Profit!
+Profit!!
