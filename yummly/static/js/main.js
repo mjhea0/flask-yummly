@@ -28,7 +28,8 @@ $(function() {
                         $("#recipe_list").append('<tr id='+obj.recipe_id+
                             '><td><img src='+obj.recipe_pic+
                             ' alt="Recipe photo" style="border-radius:50%;"></a></td><td><a href='+obj.url+'>'+obj.title+
-                            '  </a></td><td><button type="button" id="delete" class="btn btn-default btn-sm" name="'+
+                            '  </a></td><td><button type="button" id="list" class="btn btn-default btn-sm" name="'+
+                            obj.recipe_id+'" >List of Ingredients</button></td><td><button type="button" id="delete" class="btn btn-default btn-sm" name="'+
                             obj.recipe_id+'" >Delete</button></td><td id="recipe_ingredients" class="hidden">'+
                             obj.ingredients+'</td></tr>');
                     });
