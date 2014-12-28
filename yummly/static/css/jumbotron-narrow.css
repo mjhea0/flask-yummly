@@ -130,3 +130,13 @@ table img {
 .hidden {
   display: none;
 }
+.list {
+  float:right;
+  position:relative;
+  left:-50%;
+  text-align:left;
+}
+.list ul {
+  position:relative;
+  left:50%;
+}

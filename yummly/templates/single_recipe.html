@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h4>Ingredient List</h4>
+<br>
+<div class="list">
+<ul class="list-group">
+{% for ingredient in ingredients.split(',') %}
+    <li class="list-group-item">{{ ingredient }}</li>
+{% endfor %}
+</ul>
+
+</div>
+    
+
+{% endblock %}

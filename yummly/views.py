@@ -76,7 +76,6 @@ def index():
         try:
             response = api.get_ingredients(ingredient_list)
             recipe = random.choice(response["matches"])
-            print recipe
 
             ingredients = []
             for i in recipe['ingredients']:
@@ -163,6 +162,12 @@ def recipe_collection():
 def saved_recipes():
     return render_template("recipes.html")
 
+@app.route("/recipe/<int:recipe_id>", methods=["GET", "POST"])
+@login_required
+def ingredients_list(recipe_id):
+    single_recipe = db.session.query(Recipe).filter_by(id=recipe_id).first()
+    ingredients = single_recipe.ingredients
+    return render_template("single_recipe.html", single_recipe=single_recipe, ingredients=ingredients)
 
 @app.route("/api/v1/recipes/<int:recipe_id>", methods=["GET", "POST"])
 def recipe_element(recipe_id):
@@ -174,9 +179,9 @@ def recipe_element(recipe_id):
                 "title": single_recipe.title,
                 "url": single_recipe.url,
                 "user_id": single_recipe.user_id,
-                "user_id": recipe.user_id,
-                "recipe_pic": recipe.pic,
-                "ingredients": recipe.ingredients
+                "user_id": single_recipe.user_id,
+                "recipe_pic": single_recipe.pic,
+                "ingredients": single_recipe.ingredients
             }
             return jsonify(result)
         else:
