@@ -162,12 +162,17 @@ def recipe_collection():
 def saved_recipes():
     return render_template("recipes.html")
 
+
 @app.route("/recipe/<int:recipe_id>", methods=["GET", "POST"])
 @login_required
 def ingredients_list(recipe_id):
     single_recipe = db.session.query(Recipe).filter_by(id=recipe_id).first()
     ingredients = single_recipe.ingredients
-    return render_template("single_recipe.html", single_recipe=single_recipe, ingredients=ingredients)
+    return render_template(
+        "single_recipe.html",
+        single_recipe=single_recipe,
+        ingredients=ingredients)
+
 
 @app.route("/api/v1/recipes/<int:recipe_id>", methods=["GET", "POST"])
 def recipe_element(recipe_id):
