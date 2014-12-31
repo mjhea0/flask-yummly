@@ -5,9 +5,12 @@
 <br>
 <div class="list">
 <ul class="list-group">
-{% for ingredient in ingredients.split(',') %}
+{% for ingredient in ingredients %}
     <li class="list-group-item">{{ ingredient }}</li>
 {% endfor %}
+{% if error %}
+    {{ error }}
+{% endif %}
 </ul>
 
 </div>

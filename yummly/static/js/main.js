@@ -78,7 +78,7 @@ $(function() {
                 $("#errors").hide()
                 $("#results").show()
                 $("#results").html('<h3><a href="http://www.yummly.com/recipe/'+result.recipe_id+
-                    '" id="recipe_title">'+result.recipe_name+'</a></h3><p>Rating: '+result.recipe_rating+
+                    '" id="recipe_title" class='+result.recipe_id+'>'+result.recipe_name+'</a></h3><p>Rating: '+result.recipe_rating+
                     ' out of 5</p><a href="http://www.yummly.com/recipe/'+result.recipe_id+'"><img src='+
                     result.recipe_pic+' alt="Recipe photo" style="border-radius:50%;"></a><p class="hidden">'+
                     result.recipe_ingredients+'</p><br><br>');
@@ -106,6 +106,8 @@ $(function() {
         var recipe_title = $("#recipe_title").text();
         var recipe_pic = document.getElementsByTagName('img')[0].currentSrc;
         var recipe_ingredients = $(".hidden").text();
+        var yummly_id = $("#recipe_title").attr('class');
+        console.log(yummly_id);
         $(".save").empty();
         $(this).css('background-color','#5bc0de');
         $(".save").append('Recipe saved!');
@@ -116,7 +118,8 @@ $(function() {
             data : { 'recipe_title' : recipe_title,
                       'recipe_url' : recipe_url,
                       'recipe_pic' : recipe_pic,
-                      'recipe_ingredients' : recipe_ingredients
+                      'recipe_ingredients' : recipe_ingredients,
+                      'yummly_id' : yummly_id
                    },
             success: function(result) {
               console.log(result);
