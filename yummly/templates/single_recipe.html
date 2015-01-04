@@ -2,6 +2,9 @@
 
 {% block content %}
 <h4>Ingredient List</h4>
+<form role="form" method="POST" id="sms" onsubmit="return false">
+<a class="btn btn-default btn-sm btn-info" role="button" href=/recipe/{{ id }}/sms>Send by text message</a>
+</form>
 <br>
 <div class="list">
 <ul class="list-group">

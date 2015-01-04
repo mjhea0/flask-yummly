@@ -10,9 +10,13 @@ from flask import render_template, request, jsonify, \
 from flask.ext.login import current_user, login_required, \
     login_user, logout_user
 
+from twilio.rest import TwilioRestClient
+
 from yummly import app, bcrypt, db, api
 from yummly.forms import LoginForm, AddUserForm
 from models import User, Recipe
+
+from secret import sid, token
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -173,17 +177,40 @@ def ingredients_list(recipe_id):
     single_recipe = db.session.query(Recipe).filter_by(id=recipe_id).first()
     try:
         response = api.get_ingredient_list(single_recipe.yummly_id)
-        result = response["ingredientLines"]
-        print result
+        ingredients = response["ingredientLines"]
 
     except:
         error = "No ingredients found."
 
     return render_template(
         "single_recipe.html",
-        ingredients=result,
+        ingredients=ingredients,
+        id=recipe_id,
         error=error)
 
+@app.route("/recipe/<int:recipe_id>/sms")
+@login_required
+def send_sms(recipe_id):
+    error = ""
+    single_recipe = db.session.query(Recipe).filter_by(id=recipe_id).first()
+    try: 
+        response = api.get_ingredient_list(single_recipe.yummly_id)
+        ingredients = response["ingredientLines"]
+
+        sms = ', '.join(ingredients)
+        print sms
+
+        account_sid = sid
+        auth_token = token
+        client = TwilioRestClient(account_sid, auth_token)
+
+        # message = client.messages.create(to="+19413200462", from_="+19419607434",
+        #                                  body=sms)
+
+    except:
+        error = "No ingredients found."
+
+    return redirect(url_for('recipes'))
 
 @app.route("/api/v1/recipes/<int:recipe_id>", methods=["GET", "POST"])
 def recipe_element(recipe_id):

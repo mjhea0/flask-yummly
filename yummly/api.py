@@ -2,7 +2,7 @@
 
 
 import requests
-from secret import APP_ID, APP_KEY
+from secret import APP_ID, APP_KEY, sid, token
 
 
 def get_ingredients(ingredient_list):
