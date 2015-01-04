@@ -188,10 +188,11 @@ def ingredients_list(recipe_id):
         id=recipe_id,
         error=error)
 
-@app.route("/recipe/<int:recipe_id>/sms")
+@app.route("/recipe/<int:recipe_id>/sms", methods=["GET", "POST"])
 @login_required
 def send_sms(recipe_id):
     error = ""
+    number = "+" + request.form.get('phone_number')
     single_recipe = db.session.query(Recipe).filter_by(id=recipe_id).first()
     try: 
         response = api.get_ingredient_list(single_recipe.yummly_id)
@@ -199,6 +200,7 @@ def send_sms(recipe_id):
 
         sms = ', '.join(ingredients)
         print sms
+        print number
 
         account_sid = sid
         auth_token = token
@@ -207,10 +209,12 @@ def send_sms(recipe_id):
         # message = client.messages.create(to="+19413200462", from_="+19419607434",
         #                                  body=sms)
 
+        return sms
+
     except:
         error = "No ingredients found."
+        return error
 
-    return redirect(url_for('recipes'))
 
 @app.route("/api/v1/recipes/<int:recipe_id>", methods=["GET", "POST"])
 def recipe_element(recipe_id):
