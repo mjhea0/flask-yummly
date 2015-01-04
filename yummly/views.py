@@ -192,25 +192,24 @@ def ingredients_list(recipe_id):
 @login_required
 def send_sms(recipe_id):
     error = ""
-    number = "+" + request.form.get('phone_number')
+    number = "+1" + request.form.get('phone_number')
     single_recipe = db.session.query(Recipe).filter_by(id=recipe_id).first()
     try: 
         response = api.get_ingredient_list(single_recipe.yummly_id)
         ingredients = response["ingredientLines"]
+        name = response["name"]
 
-        sms = ', '.join(ingredients)
+        shopping_list = '; '.join(ingredients)
+        sms = name + " ingredients: " + shopping_list
         print sms
         print number
 
         account_sid = sid
         auth_token = token
         client = TwilioRestClient(account_sid, auth_token)
-
-        # message = client.messages.create(to="+19413200462", from_="+19419607434",
-        #                                  body=sms)
-
+        message = client.messages.create(to=number, from_="+19419607434",
+                                         body=sms)
         return sms
-
     except:
         error = "No ingredients found."
         return error

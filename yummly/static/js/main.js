@@ -93,7 +93,6 @@ $(function() {
 
     $('#sms').on('submit', function(event){
         console.log("SMS sending");
-
         var phone_number = $('input[name="list"]').val();
         if (isNaN(phone_number) || phone_number.length != 10) {
          console.log("not a number");
@@ -147,10 +146,9 @@ $(function() {
             success: function(result) {
               console.log(result);
             }
-            // error: function (error) {
-            //   // body...
-            //   console.log(error);
-            // }
+            error: function (error) {
+              console.log(error);
+            }
         });
     });
 
