@@ -2,7 +2,7 @@
 
 
 import requests
-from secret import APP_ID, APP_KEY, sid, token
+from secret import APP_ID, APP_KEY
 
 
 def get_ingredients(ingredient_list):
@@ -17,6 +17,7 @@ def get_ingredients(ingredient_list):
     )
     print res.from_cache
     return res.json()
+
 
 def get_ingredient_list(recipe_id):
     res = requests.get(

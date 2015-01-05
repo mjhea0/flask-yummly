@@ -80,7 +80,7 @@ def index():
         try:
             response = api.get_ingredients(ingredient_list)
             recipe = random.choice(response["matches"])
-
+            print response
             ingredients = []
             for i in recipe['ingredients']:
                 ingredients.append(i)
@@ -157,7 +157,9 @@ def recipe_collection():
                 yummly_id=yummly_id
             )
             db.session.add(Recipe(
-                recipe_title, recipe_url, user, recipe_pic, recipe_ingredients, yummly_id))
+                recipe_title, recipe_url, user,
+                recipe_pic, recipe_ingredients, yummly_id)
+            )
             db.session.commit()
             return jsonify({"Success": "Recipe added."}), 200
         except:
@@ -188,13 +190,14 @@ def ingredients_list(recipe_id):
         id=recipe_id,
         error=error)
 
+
 @app.route("/recipe/<int:recipe_id>/sms", methods=["GET", "POST"])
 @login_required
 def send_sms(recipe_id):
     error = ""
     number = "+1" + request.form.get('phone_number')
     single_recipe = db.session.query(Recipe).filter_by(id=recipe_id).first()
-    try: 
+    try:
         response = api.get_ingredient_list(single_recipe.yummly_id)
         ingredients = response["ingredientLines"]
         name = response["name"]
@@ -207,8 +210,7 @@ def send_sms(recipe_id):
         account_sid = sid
         auth_token = token
         client = TwilioRestClient(account_sid, auth_token)
-        message = client.messages.create(to=number, from_="+19419607434",
-                                         body=sms)
+        client.messages.create(to=number, from_="+19419607434", body=sms)
         return sms
     except:
         error = "No ingredients found."

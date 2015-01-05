@@ -9,6 +9,7 @@ Recipes -> Ingredients
 1. Clone
 1. Create/Activate virtualenv
 1. Set Environment variables - `export APP_SETTINGS="yummly.config.DevelopmentConfig"`
+1. Rename *yummly/secret_sample.py* to *yummly/secret.py* and update variables
 1. Create DB - `python create_db.py`
 1. Run - python run.py
 
