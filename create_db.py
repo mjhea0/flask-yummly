@@ -11,7 +11,8 @@ db.session.add(Recipe(
     "http://www.yummly.com/recipe/Pizza-Bianca-with-Anchovies-_-Kale-633201",
     "1",
     "pic",
-    "ingredients")
+    "ingredients",
+    "yummy_id")
 )
 db.session.commit()
 
@@ -22,5 +23,5 @@ db.session.commit()
 # user = User.query.filter_by(username='user').first()
 # print user.password
 
-# recipe = Recipe.query.filter_by().all()
-# print recipe
+recipe = Recipe.query.filter_by().all()
+print recipe

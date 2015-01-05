@@ -10,9 +10,13 @@ from flask import render_template, request, jsonify, \
 from flask.ext.login import current_user, login_required, \
     login_user, logout_user
 
+from twilio.rest import TwilioRestClient
+
 from yummly import app, bcrypt, db, api
 from yummly.forms import LoginForm, AddUserForm
 from models import User, Recipe
+
+from secret import sid, token
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -101,7 +105,7 @@ def index():
         except:
             result = {"sorry": "Sorry, no results! Please try again."}
             code = 500
-
+        print result
         return jsonify(result), code
 
     else:
@@ -128,7 +132,8 @@ def recipe_collection():
                 "url": recipe.url,
                 "user_id": recipe.user_id,
                 "recipe_pic": recipe.pic,
-                "ingredients": recipe.ingredients
+                "ingredients": recipe.ingredients,
+                "yummly_id": recipe.yummly_id
             }
             recipes.append(result)
             result = recipes
@@ -142,15 +147,17 @@ def recipe_collection():
             user = current_user.get_id()
             recipe_pic = request.form.get('recipe_pic')
             recipe_ingredients = request.form.get('recipe_ingredients')
+            yummly_id = request.form.get('yummly_id')
             recipe = Recipe(
                 title=recipe_title,
                 url=recipe_url,
                 user_id=user,
                 pic=recipe_pic,
-                ingredients=recipe_ingredients
+                ingredients=recipe_ingredients,
+                yummly_id=yummly_id
             )
             db.session.add(Recipe(
-                recipe_title, recipe_url, user, recipe_pic, recipe_ingredients))
+                recipe_title, recipe_url, user, recipe_pic, recipe_ingredients, yummly_id))
             db.session.commit()
             return jsonify({"Success": "Recipe added."}), 200
         except:
@@ -163,15 +170,49 @@ def saved_recipes():
     return render_template("recipes.html")
 
 
-@app.route("/recipe/<int:recipe_id>", methods=["GET", "POST"])
+@app.route("/recipe/<int:recipe_id>")
 @login_required
 def ingredients_list(recipe_id):
+    error = ""
     single_recipe = db.session.query(Recipe).filter_by(id=recipe_id).first()
-    ingredients = single_recipe.ingredients
+    try:
+        response = api.get_ingredient_list(single_recipe.yummly_id)
+        ingredients = response["ingredientLines"]
+
+    except:
+        error = "No ingredients found."
+
     return render_template(
         "single_recipe.html",
-        single_recipe=single_recipe,
-        ingredients=ingredients)
+        ingredients=ingredients,
+        id=recipe_id,
+        error=error)
+
+@app.route("/recipe/<int:recipe_id>/sms", methods=["GET", "POST"])
+@login_required
+def send_sms(recipe_id):
+    error = ""
+    number = "+1" + request.form.get('phone_number')
+    single_recipe = db.session.query(Recipe).filter_by(id=recipe_id).first()
+    try: 
+        response = api.get_ingredient_list(single_recipe.yummly_id)
+        ingredients = response["ingredientLines"]
+        name = response["name"]
+
+        shopping_list = '; '.join(ingredients)
+        sms = name + " ingredients: " + shopping_list
+        print sms
+        print number
+
+        account_sid = sid
+        auth_token = token
+        client = TwilioRestClient(account_sid, auth_token)
+        message = client.messages.create(to=number, from_="+19419607434",
+                                         body=sms)
+        return sms
+    except:
+        error = "No ingredients found."
+        return error
 
 
 @app.route("/api/v1/recipes/<int:recipe_id>", methods=["GET", "POST"])

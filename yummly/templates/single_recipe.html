@@ -2,12 +2,20 @@
 
 {% block content %}
 <h4>Ingredient List</h4>
+<form class="form-inline" role="form" method="POST" id="sms" action="" onsubmit="return false">
+Want to receive this list via text? Enter a 10-digit phone number below.
+<center><input type="text" class="form-control" name="list" placeholder="" style="max-width: 100px; font-size: 12px;" required>
+<button class="btn btn-default btn-sm btn-info" type="submit" role="button" id="{{ id }}">Send it!</button></center>
+</form>
 <br>
 <div class="list">
 <ul class="list-group">
-{% for ingredient in ingredients.split(',') %}
+{% for ingredient in ingredients %}
     <li class="list-group-item">{{ ingredient }}</li>
 {% endfor %}
+{% if error %}
+    {{ error }}
+{% endif %}
 </ul>
 
 </div>

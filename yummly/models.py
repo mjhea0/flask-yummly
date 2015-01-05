@@ -13,13 +13,15 @@ class Recipe(db.Model):
     user_id = db.Column(db.Integer, ForeignKey('users.id'))
     pic = db.Column(db.String)
     ingredients = db.Column(db.String)
+    yummly_id = db.Column(db.String)
 
-    def __init__(self, title, url, user_id, pic, ingredients):
+    def __init__(self, title, url, user_id, pic, ingredients, yummly_id):
         self.title = title
         self.url = url
         self.user_id = user_id
         self.pic = pic
         self.ingredients = ingredients
+        self.yummly_id = yummly_id
 
     def __repr__(self):
         return '< %r>' % self.title
