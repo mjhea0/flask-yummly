@@ -76,7 +76,7 @@ def index():
         try:
             response = api.get_ingredients(ingredient_list)
             recipe = random.choice(response["matches"])
-
+            print response
             ingredients = []
             for i in recipe['ingredients']:
                 ingredients.append(i)
