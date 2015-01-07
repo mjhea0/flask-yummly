@@ -4,6 +4,8 @@
 import requests
 from secret import APP_ID, APP_KEY
 
+# RECTOR - ADD TO HELPER FUNCTION FILE
+
 
 def get_ingredients(ingredient_list):
     res = requests.get(

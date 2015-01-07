@@ -77,7 +77,7 @@ def index():
         ingredient_list = request.form.get('ingredient_list')
         recipe = []
 
-        try:
+        try:  # REFACTOR TRY/EXCEPT
             response = api.get_ingredients(ingredient_list)
             recipe = random.choice(response["matches"])
             print response

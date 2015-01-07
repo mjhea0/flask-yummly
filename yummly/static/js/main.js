@@ -1,9 +1,11 @@
 $(function() {
 
+    // sanity check
     console.log("dom is ready!");
 
+    // hide buttons on intial dom
     $(".retry").hide()
-    $("#links").hide()
+    $("#links").hide()  // class vs id?
     $(".save").hide()
 
     getRecipes();
@@ -24,6 +26,7 @@ $(function() {
                 $.each(result, function(idx, obj) {
                     $.each(obj, function(idx, obj) {
                         // console.log(obj.title, obj.url, obj.recipe_id, obj.recipe_pic, obj.ingredients);
+                        // REFACTOR - helper function for html
                         $("#recipe_list").append('<tr id='+obj.recipe_id+
                             '><td><img src='+obj.recipe_pic+
                             ' alt="Recipe photo" style="border-radius:50%;"></a></td><td><a href='+obj.url+'>'+obj.title+
@@ -77,6 +80,7 @@ $(function() {
                 $("#links").show()
                 $("#errors").hide()
                 $("#results").show()
+                // REACTOR HELPER FUNCTION
                 $("#results").html('<h3><a href="http://www.yummly.com/recipe/'+result.recipe_id+
                     '" id="recipe_title" class='+result.recipe_id+'>'+result.recipe_name+'</a></h3><p>Rating: '+result.recipe_rating+
                     ' out of 5</p><a href="http://www.yummly.com/recipe/'+result.recipe_id+'"><img src='+
@@ -96,10 +100,11 @@ $(function() {
         var phone_number = $('input[name="list"]').val();
         if (isNaN(phone_number) || phone_number.length != 10) {
          console.log("not a number");
-         alert("Please enter a valid ten-digit phone number.")
+         alert("Please enter a valid ten-digit phone number.")  // REFACTOR add error message
         }
         else {
             id = $('button').attr('id');
+            // REFACTOR - add error handler
             $.ajax({
                 type: "POST",
                 url: "/recipe/"+id+"/sms",
@@ -110,7 +115,7 @@ $(function() {
                     alert("Message sent! Check your phone.");
                 }
             })
-        }    
+        }
     });
 
     $('.new-link').on('click', function(event){
