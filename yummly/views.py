@@ -202,7 +202,7 @@ def send_sms(recipe_id):
         ingredients = response["ingredientLines"]
         name = response["name"]
 
-        shopping_list = '; '.join(ingredients)
+        shopping_list = '\n'.join(ingredients)
         sms = name + " ingredients: " + shopping_list
         print sms
         print number

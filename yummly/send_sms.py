@@ -1,9 +1,9 @@
 # Download the twilio-python library from http://twilio.com/docs/libraries
 from twilio.rest import TwilioRestClient
 
-from secret import SID, TOKEN
+from secret import sid, token
 
-client = TwilioRestClient(SID, TOKEN)
+client = TwilioRestClient(sid, token)
 
 message = client.messages.create(
     to="+19413200462",
